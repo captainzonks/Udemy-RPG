@@ -15,28 +15,36 @@ public class CameraController : MonoBehaviour
     private float halfWidth;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //target = PlayerController.instance.transform;
         target = FindObjectOfType<PlayerController>().transform;
 
-        halfHeight = Camera.main.orthographicSize;
-        halfWidth = halfHeight * Camera.main.aspect;
+        if (Camera.main != null)
+        {
+            var main = Camera.main;
+            halfHeight = main.orthographicSize;
+            halfWidth = halfHeight * main.aspect;
+        }
 
-        bottomLeftLimit = theMap.localBounds.min + new Vector3(halfWidth, halfHeight, 0f);
-        topRightLimit = theMap.localBounds.max + new Vector3(-halfWidth, -halfHeight, 0f);
+        var localBounds = theMap.localBounds;
+        bottomLeftLimit = localBounds.min + new Vector3(halfWidth, halfHeight, 0f);
+        topRightLimit = localBounds.max + new Vector3(-halfWidth, -halfHeight, 0f);
 
-        PlayerController.instance.SetBounds(theMap.localBounds.min, theMap.localBounds.max);
+        PlayerController.instance.SetBounds(localBounds.min, localBounds.max);
     }
 
     // LateUpdate is called once per frame after Update
-    void LateUpdate()
+    private void LateUpdate()
     {
-        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+        var transformPosition = transform.position;
+        var targetPosition = target.position;
+        transformPosition = new Vector3(targetPosition.x, targetPosition.y, transformPosition.z);
 
         // keep the camera inside the bounds
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x), 
-            Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y), 
-            transform.position.z);
+        transformPosition = new Vector3(Mathf.Clamp(transformPosition.x, bottomLeftLimit.x, topRightLimit.x), 
+            Mathf.Clamp(transformPosition.y, bottomLeftLimit.y, topRightLimit.y), 
+            transformPosition.z);
+        transform.position = transformPosition;
     }
 }

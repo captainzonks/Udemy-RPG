@@ -23,13 +23,13 @@ public class Shop : MonoBehaviour
     public Text sellItemName, sellItemDescription, sellItemValue;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         instance = this;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K) && !shopMenu.activeInHierarchy)
         {

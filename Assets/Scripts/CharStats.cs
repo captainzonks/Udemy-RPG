@@ -26,19 +26,19 @@ public class CharStats : MonoBehaviour
     public Sprite charImage;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         expToNextLevel = new int[maxLevel];
         expToNextLevel[1] = baseEXP;
 
-        for(int i = 2; i < expToNextLevel.Length; i++)
+        for(var i = 2; i < expToNextLevel.Length; i++)
         {
             expToNextLevel[i] = Mathf.FloorToInt(expToNextLevel[i - 1] * 1.05f);
         }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
@@ -46,7 +46,7 @@ public class CharStats : MonoBehaviour
         }
     }
 
-    public void AddExp(int expToAdd)
+    private void AddExp(int expToAdd)
     {
         currentEXP += expToAdd;
 

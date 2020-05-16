@@ -19,7 +19,7 @@ public class DialogManager : MonoBehaviour
     private bool justStarted;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         instance = this;
 
@@ -27,33 +27,29 @@ public class DialogManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(dialogBox.activeInHierarchy)
+        if (!dialogBox.activeInHierarchy) return;
+        if (!Input.GetButtonUp("Fire1")) return;
+        if (!justStarted)
         {
-            if(Input.GetButtonUp("Fire1"))
+            currentLine++;
+
+            if (currentLine >= dialogLines.Length)
             {
-                if(!justStarted)
-                {
-                    currentLine++;
+                dialogBox.SetActive(false);
 
-                    if (currentLine >= dialogLines.Length)
-                    {
-                        dialogBox.SetActive(false);
-
-                        GameManager.instance.dialogActive = false;
-                    }
-                    else
-                    {
-                        CheckIfName();
-                        dialogText.text = dialogLines[currentLine];
-                    }
-                }
-                else
-                {
-                    justStarted = false;
-                }
+                GameManager.instance.dialogActive = false;
             }
+            else
+            {
+                CheckIfName();
+                dialogText.text = dialogLines[currentLine];
+            }
+        }
+        else
+        {
+            justStarted = false;
         }
     }
 
@@ -74,12 +70,10 @@ public class DialogManager : MonoBehaviour
         GameManager.instance.dialogActive = true;
     }
 
-    public void CheckIfName()
+    private void CheckIfName()
     {
-        if(dialogLines[currentLine].StartsWith("n-"))
-        {
-            nameText.text = dialogLines[currentLine].Replace("n-", "");
-            currentLine++;
-        }
+        if (!dialogLines[currentLine].StartsWith("n-")) return;
+        nameText.text = dialogLines[currentLine].Replace("n-", "");
+        currentLine++;
     }
 }

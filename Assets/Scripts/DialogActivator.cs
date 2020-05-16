@@ -11,14 +11,8 @@ public class DialogActivator : MonoBehaviour
 
     public bool isPerson = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(canActivate && Input.GetButtonDown("Fire1") && !DialogManager.instance.dialogBox.activeInHierarchy)
         {
@@ -28,7 +22,7 @@ public class DialogActivator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if(other.CompareTag("Player"))
         {
             canActivate = true;
         }
@@ -36,7 +30,7 @@ public class DialogActivator : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             canActivate = false;
         }

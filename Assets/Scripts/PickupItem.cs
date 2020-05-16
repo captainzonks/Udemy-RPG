@@ -6,25 +6,17 @@ public class PickupItem : MonoBehaviour
 {
     private bool canPickup;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (canPickup && Input.GetButtonDown("Fire1") && PlayerController.instance.canMove)
-        {
-            GameManager.instance.AddItem(GetComponent<Item>().itemName);
-            Destroy(gameObject);
-        }
+        if (!canPickup || !Input.GetButtonDown("Fire1") || !PlayerController.instance.canMove) return;
+        GameManager.instance.AddItem(GetComponent<Item>().itemName);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             canPickup = true;
         }
@@ -32,7 +24,7 @@ public class PickupItem : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             canPickup = false;
         }

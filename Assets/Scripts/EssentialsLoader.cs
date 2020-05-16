@@ -9,7 +9,7 @@ public class EssentialsLoader : MonoBehaviour
     public GameObject gameMan;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if(UIFade.instance == null)
         {
@@ -18,7 +18,7 @@ public class EssentialsLoader : MonoBehaviour
 
         if(PlayerController.instance == null)
         {
-            PlayerController clone = Instantiate(player).GetComponent<PlayerController>();
+            var clone = Instantiate(player).GetComponent<PlayerController>();
             PlayerController.instance = clone;
         }
 
@@ -26,11 +26,5 @@ public class EssentialsLoader : MonoBehaviour
         {
             Instantiate(gameMan);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
