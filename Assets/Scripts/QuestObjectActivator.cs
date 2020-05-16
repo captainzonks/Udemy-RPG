@@ -19,7 +19,7 @@ public class QuestObjectActivator : MonoBehaviour
         CheckCompletion();
     }
 
-    private void CheckCompletion()
+    public void CheckCompletion()
     {
         if (QuestManager.instance.CheckIfComplete(questToCheck))
         {

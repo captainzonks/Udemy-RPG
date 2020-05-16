@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DialogActivator : MonoBehaviour
 {
@@ -11,12 +9,18 @@ public class DialogActivator : MonoBehaviour
 
     public bool isPerson = true;
 
+    public bool shouldActivateQuest;
+    public string questToMark;
+    public bool markComplete;
+
+
     // Update is called once per frame
     private void Update()
     {
         if(canActivate && Input.GetButtonDown("Fire1") && !DialogManager.instance.dialogBox.activeInHierarchy)
         {
             DialogManager.instance.ShowDialog(lines, isPerson);
+            DialogManager.instance.ShouldActivateQuestAtEnd(questToMark, markComplete);
         }
     }
 
