@@ -45,8 +45,6 @@ namespace Core
             if (!Input.GetButtonDown("Fire2")) return;
             if(theMenu.activeInHierarchy)
             {
-                //theMenu.SetActive(false);
-                //GameManager.instance.gameMenuOpen = false;
                 CloseMenu();
             }
             else
@@ -171,8 +169,6 @@ namespace Core
         {
             return statusImage;
         }
-
-
 
         void UpdateMainStats()
         {

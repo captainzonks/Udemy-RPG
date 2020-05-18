@@ -4,11 +4,9 @@ namespace Movement
 {
     public class PlayerController : MonoBehaviour
     {
-
-        [SerializeField] Rigidbody2D playerRigidbody2D;
-        [SerializeField] float playerMoveSpeed;
-
-        [SerializeField] Animator playerAnimator;
+        Rigidbody2D _playerRigidbody2D;
+        float _playerMoveSpeed;
+        Animator _playerAnimator;
 
         public static PlayerController instance;
 
@@ -16,10 +14,14 @@ namespace Movement
         Vector3 _bottomLeftLimit;
         Vector3 _topRightLimit;
 
-        [SerializeField] bool canMove = true;
+        bool _canMove = true;
 
         void Start()
         {
+            _playerRigidbody2D = GetComponent<Rigidbody2D>();
+            _playerMoveSpeed = 4f;
+            _playerAnimator = GetComponent<Animator>();
+
             if (instance == null)
             {
                 instance = this;
@@ -37,26 +39,25 @@ namespace Movement
 
         void Update()
         {
-            if (canMove)
+            if (_canMove)
             {
-                playerRigidbody2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * playerMoveSpeed;
-
+                _playerRigidbody2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * _playerMoveSpeed;
             }
             else
             {
-                playerRigidbody2D.velocity = Vector2.zero;
+                _playerRigidbody2D.velocity = Vector2.zero;
             }
 
-            playerAnimator.SetFloat("moveX", playerRigidbody2D.velocity.x);
-            playerAnimator.SetFloat("moveY", playerRigidbody2D.velocity.y);
+            _playerAnimator.SetFloat("moveX", _playerRigidbody2D.velocity.x);
+            _playerAnimator.SetFloat("moveY", _playerRigidbody2D.velocity.y);
 
             if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 ||
                 Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
             {
-                if (canMove)
+                if (_canMove)
                 {
-                    playerAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-                    playerAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
+                    _playerAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
+                    _playerAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
                 }
             }
 
@@ -86,12 +87,12 @@ namespace Movement
 
         public bool CanMove()
         {
-            return canMove;
+            return _canMove;
         }
 
         public void ModifyMovement(bool movement)
         {
-            canMove = movement;
+            _canMove = movement;
         }
     }
 }

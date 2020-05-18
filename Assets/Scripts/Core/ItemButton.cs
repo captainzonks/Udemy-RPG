@@ -5,18 +5,25 @@ namespace Core
 {
     public class ItemButton : MonoBehaviour
     {
-        [SerializeField] Image buttonImage;
-        [SerializeField] Text amountText;
-        [SerializeField] int buttonValue;
+        private Image _buttonImage;
+        private Text _amountText;
+        private int _buttonValue;
+
+        void Start()
+        {
+            _buttonImage = GetComponent<Image>();
+            _amountText = GetComponent<Text>();
+            _buttonValue = 0;
+        }
 
         public void Press()
         {
             if (GameMenu.instance.GetTheMenu().activeInHierarchy)
             {
-                if (GameManager.instance.ItemsHeld()[buttonValue] != "")
+                if (GameManager.instance.ItemsHeld()[_buttonValue] != "")
                 {
                     GameMenu.instance.SelectItem(
-                        GameManager.instance.GetItemDetails(GameManager.instance.ItemsHeld()[buttonValue]));
+                        GameManager.instance.GetItemDetails(GameManager.instance.ItemsHeld()[_buttonValue]));
                 }
             }
 
@@ -24,34 +31,34 @@ namespace Core
             if (Shop.instance.buyMenu.activeInHierarchy)
             {
                 Shop.instance.SelectBuyItem(
-                    GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]));
+                    GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[_buttonValue]));
             }
 
             if (Shop.instance.sellMenu.activeInHierarchy)
             {
                 Shop.instance.SelectSellItem(
-                    GameManager.instance.GetItemDetails(GameManager.instance.ItemsHeld()[buttonValue]));
+                    GameManager.instance.GetItemDetails(GameManager.instance.ItemsHeld()[_buttonValue]));
             }
         }
 
         public Image GetButtonImage()
         {
-            return buttonImage;
+            return _buttonImage;
         }
 
         public Text GetAmountText()
         {
-            return amountText;
+            return _amountText;
         }
 
         public int GetButtonValue()
         {
-            return buttonValue;
+            return _buttonValue;
         }
 
         public void SetButtonValue(int set)
         {
-            buttonValue = set;
+            _buttonValue = set;
         }
     }
 }

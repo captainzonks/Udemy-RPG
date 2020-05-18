@@ -5,135 +5,150 @@ namespace Core
 {
    public class Item : MonoBehaviour
     {
-        [Header("Item Type")]
-        [SerializeField] bool isItem;
-        [SerializeField] bool isWeapon;
-        [SerializeField] bool isArmor;
+        private readonly bool _isItem;
+        private readonly bool _isWeapon;
+        private readonly bool _isArmor;
 
-        [Header("Item Details")] 
-        [SerializeField] string itemName;
-        [SerializeField] string description;
-        [SerializeField] int value;
-        [SerializeField] Sprite itemSprite;
+        private readonly string _itemName;
+        private readonly string _description;
+        private readonly int _value;
+        private readonly Sprite _itemSprite;
 
-        [Header("Item Details")]
-        [SerializeField] int amountToChange;
-        [SerializeField] bool affectHP, affectMP, affectStr;
+        private readonly int _amountToChange;
+        private readonly bool _affectHp;
+        private readonly bool _affectMp;
+        private readonly bool _affectStr;
 
-        [Header("Weapon/Armor Details")]
-        [SerializeField] int weaponStrength;
-        [SerializeField] int armorStrength;
+        private readonly int _weaponStrength;
+        private readonly int _armorStrength;
+
+        public Item(bool isItem, bool isWeapon, bool isArmor, string itemName, string description, int value, Sprite itemSprite, int amountToChange, bool affectStr, bool affectHp, bool affectMp, int weaponStrength, int armorStrength)
+        {
+            _isItem = isItem;
+            _isWeapon = isWeapon;
+            _isArmor = isArmor;
+            _itemName = itemName;
+            _description = description;
+            _value = value;
+            _itemSprite = itemSprite;
+            _amountToChange = amountToChange;
+            _affectStr = affectStr;
+            _affectHp = affectHp;
+            _affectMp = affectMp;
+            _weaponStrength = weaponStrength;
+            _armorStrength = armorStrength;
+        }
 
         public bool IsItem()
         {
-            return isItem;
+            return _isItem;
         }
 
         public bool IsWeapon()
         {
-            return isWeapon;
+            return _isWeapon;
         }
 
         public bool IsArmor()
         {
-            return isArmor;
+            return _isArmor;
         }
 
         public string GetItemName()
         {
-            return itemName;
+            return _itemName;
         }
 
         public string GetDescription()
         {
-            return description;
+            return _description;
         }
 
         public int GetValue()
         {
-            return value;
+            return _value;
         }
 
         public Sprite GetItemSprite()
         {
-            return itemSprite;
+            return _itemSprite;
         }
 
         public int GetAmountToChange()
         {
-            return amountToChange;
+            return _amountToChange;
         }
 
         public bool GetAffectHP()
         {
-            return affectHP;
+            return _affectHp;
         }
 
         public bool GetAffectMP()
         {
-            return affectMP;
+            return _affectMp;
         }
 
         public bool GetAffectStr()
         {
-            return affectStr;
+            return _affectStr;
         }
 
         public int GetWeaponStr()
         {
-            return weaponStrength;
+            return _weaponStrength;
         }
 
         public int GetArmorStr()
         {
-            return armorStrength;
+            return _armorStrength;
         }
 
         public void Use(int charToUseOn)
         {
             var selectedChar = GameManager.instance.GetPlayerStats()[charToUseOn];
 
-            if (isItem)
+            if (_isItem)
             {
-                if (affectHP)
+                if (_affectHp)
                 {
-                    selectedChar.ChangeHealth(amountToChange);
+                    selectedChar.ChangeHealth(_amountToChange);
                 }
 
-                if (affectMP)
+                if (_affectMp)
                 { 
-                    selectedChar.ChangeMana(amountToChange);
+                    selectedChar.ChangeMana(_amountToChange);
                 }
 
-                if (affectStr)
+                if (_affectStr)
                 {
-                    selectedChar.ChangeStrength(amountToChange);
+                    selectedChar.ChangeStrength(_amountToChange);
                 }
             }
 
-            if (isWeapon)
+            if (_isWeapon)
             {
                 if (selectedChar.GetWeapon() != "")
                 {
                     GameManager.instance.AddItem(selectedChar.GetWeapon());
                 }
 
-                selectedChar.ChangeWeapon(itemName);
-                selectedChar.ChangeWpnPwr(weaponStrength);
+                selectedChar.ChangeWeapon(_itemName);
+                selectedChar.ChangeWpnPwr(_weaponStrength);
             }
 
-            if (isArmor)
+            if (_isArmor)
             {
                 if (selectedChar.GetArmor() != "")
                 {
                     GameManager.instance.AddItem(selectedChar.GetArmor());
                 }
 
-                selectedChar.ChangeArmor(itemName);
-                selectedChar.ChangeArmrPwr(armorStrength);
+                selectedChar.ChangeArmor(_itemName);
+                selectedChar.ChangeArmrPwr(_armorStrength);
             }
 
-            GameManager.instance.RemoveItem(itemName);
+            GameManager.instance.RemoveItem(_itemName);
         }
     } 
 }

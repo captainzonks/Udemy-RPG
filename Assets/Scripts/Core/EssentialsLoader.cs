@@ -1,30 +1,31 @@
-﻿using Core;
-using Movement;
+﻿using Movement;
 using UnityEngine;
 
-public class EssentialsLoader : MonoBehaviour
+namespace Core
 {
-    public GameObject UIScreen;
-    public GameObject player;
-    public GameObject gameMan;
-
-    // Start is called before the first frame update
-    private void Start()
+    public class EssentialsLoader : MonoBehaviour
     {
-        if(UIFade.instance == null)
-        {
-            UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>();
-        }
+        [HideInInspector] public GameObject UIScreen;
+        [HideInInspector] public GameObject player;
+        [HideInInspector] public GameObject gameMan;
 
-        if(PlayerController.instance == null)
+        private void Start()
         {
-            var clone = Instantiate(player).GetComponent<PlayerController>();
-            PlayerController.instance = clone;
-        }
+            if (UIFade.instance == null)
+            {
+                UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>();
+            }
 
-        if(GameManager.instance == null)
-        {
-            Instantiate(gameMan);
+            if (PlayerController.instance == null)
+            {
+                var clone = Instantiate(player).GetComponent<PlayerController>();
+                PlayerController.instance = clone;
+            }
+
+            if (GameManager.instance == null)
+            {
+                Instantiate(gameMan);
+            }
         }
     }
 }
