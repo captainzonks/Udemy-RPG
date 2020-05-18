@@ -8,19 +8,19 @@ namespace Core
 
         public static UIFade instance;
 
-        [SerializeField] Image fadeScreen;
-        [SerializeField] float fadeSpeed;
+        [SerializeField] private Image fadeScreen;
+        [SerializeField] private float fadeSpeed;
 
-        [SerializeField] bool shouldFadeToBlack;
-        [SerializeField] bool shouldFadeFromBlack;
+        [SerializeField] private bool shouldFadeToBlack;
+        [SerializeField] private bool shouldFadeFromBlack;
 
-        void Start()
+        private void Start()
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
-        void Update()
+        private void Update()
         {
             if (shouldFadeToBlack)
             {

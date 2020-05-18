@@ -7,23 +7,21 @@ namespace Core
     public class AreaExit : MonoBehaviour
     {
 
-        [SerializeField] string areaToLoad;
+        [SerializeField] private string areaToLoad;
 
-        [SerializeField] string areaTransitionName;
+        [SerializeField] private string areaTransitionName;
 
-        [SerializeField] AreaEntrance theEntrance;
+        [SerializeField] private AreaEntrance theEntrance;
 
-        [SerializeField] float waitToLoad = 1f;
-        [SerializeField] bool shouldLoadAfterFade;
+        [SerializeField] private float waitToLoad = 1f;
+        [SerializeField] private bool shouldLoadAfterFade;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            theEntrance.SetTransitionName(areaTransitionName);
+            theEntrance.TransitionName = areaTransitionName;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (!shouldLoadAfterFade) return;
             waitToLoad -= Time.deltaTime;
@@ -32,17 +30,17 @@ namespace Core
             SceneManager.LoadScene(areaToLoad);
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
             
             shouldLoadAfterFade = true;
 
-            GameManager.instance.ModifyFading(true);
+            GameManager.Instance.ModifyFading(true);
 
             UIFade.instance.FadeToBlack();
 
-            PlayerController.instance.SetAreaTransitionName(areaTransitionName);
+            PlayerController.Instance.AreaTransitionName = areaTransitionName;
         }
     }
 }

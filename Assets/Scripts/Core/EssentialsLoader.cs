@@ -5,26 +5,26 @@ namespace Core
 {
     public class EssentialsLoader : MonoBehaviour
     {
-        [HideInInspector] public GameObject UIScreen;
-        [HideInInspector] public GameObject player;
-        [HideInInspector] public GameObject gameMan;
+        public GameObject userInterface;
+        public GameObject player;
+        public GameObject theGameManager;
 
         private void Start()
         {
             if (UIFade.instance == null)
             {
-                UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>();
+                UIFade.instance = Instantiate(userInterface).GetComponent<UIFade>();
             }
 
-            if (PlayerController.instance == null)
+            if (PlayerController.Instance == null)
             {
                 var clone = Instantiate(player).GetComponent<PlayerController>();
-                PlayerController.instance = clone;
+                PlayerController.Instance = clone;
             }
 
-            if (GameManager.instance == null)
+            if (GameManager.Instance == null)
             {
-                Instantiate(gameMan);
+                Instantiate(theGameManager);
             }
         }
     }

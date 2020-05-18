@@ -5,33 +5,35 @@ namespace Core
 {
     public class Shop : MonoBehaviour
     {
-        public static Shop instance;
+        public static Shop Instance { get; private set; }
 
-        public GameObject shopMenu;
-        public GameObject buyMenu;
-        public GameObject sellMenu;
+        public GameObject ShopMenu { get; set; }
+        public GameObject BuyMenu { get; set; }
+        public GameObject SellMenu { get; set; }
 
-        public Text goldText;
+        private Text GoldText { get; set; }
 
-        public string[] itemsForSale;
+        public string[] ItemsForSale { get; set; }
 
-        public ItemButton[] buyItemButtons;
-        public ItemButton[] sellItemButtons;
+        private ItemButton[] BuyItemButtons { get; set; }
+        private ItemButton[] SellItemButtons { get; set; }
 
-        public Item selectedItem;
-        public Text buyItemName, buyItemDescription, buyItemValue;
-        public Text sellItemName, sellItemDescription, sellItemValue;
+        private Item SelectedItem { get; set; }
+        private Text BuyItemName { get; set; }
+        private Text BuyItemDescription { get; set; }
+        private Text BuyItemValue { get; set; }
+        private Text SellItemName { get; set; }
+        private Text SellItemDescription { get; set; }
+        private Text SellItemValue { get; set; }
 
-        // Start is called before the first frame update
         private void Start()
         {
-            instance = this;
+            Instance = this;
         }
 
-        // Update is called once per frame
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K) && !shopMenu.activeInHierarchy)
+            if (Input.GetKeyDown(KeyCode.K) && !ShopMenu.activeInHierarchy)
             {
                 OpenShop();
             }
@@ -39,120 +41,120 @@ namespace Core
 
         public void OpenShop()
         {
-            shopMenu.SetActive(true);
+            ShopMenu.SetActive(true);
             OpenBuyMenu();
 
-            GameManager.instance.SetShopActive(true);
+            GameManager.Instance.SetShopActive(true);
 
-            goldText.text = GameManager.instance.CurrentGold() + "g";
+            GoldText.text = GameManager.Instance.CurrentGold() + "g";
         }
 
         public void CloseShop()
         {
-            shopMenu.SetActive(false);
+            ShopMenu.SetActive(false);
 
-            GameManager.instance.SetShopActive(false);
+            GameManager.Instance.SetShopActive(false);
         }
 
         public void OpenBuyMenu()
         {
-            buyItemButtons[0].Press();
+            BuyItemButtons[0].Press();
 
-            buyMenu.SetActive(true);
-            sellMenu.SetActive(false);
+            BuyMenu.SetActive(true);
+            SellMenu.SetActive(false);
 
-            for (var i = 0; i < buyItemButtons.Length; i++)
+            for (var i = 0; i < BuyItemButtons.Length; i++)
             {
-                buyItemButtons[i].SetButtonValue(i);
+                BuyItemButtons[i].ButtonValue = i;
 
-                if (itemsForSale[i] != "")
+                if (ItemsForSale[i] != "")
                 {
-                    buyItemButtons[i].GetButtonImage().gameObject.SetActive(true);
-                    buyItemButtons[i].GetButtonImage().sprite =
-                        GameManager.instance.GetItemDetails(itemsForSale[i]).GetItemSprite();
-                    buyItemButtons[i].GetAmountText().text = "";
+                    BuyItemButtons[i].ButtonImage.gameObject.SetActive(true);
+                    BuyItemButtons[i].ButtonImage.sprite =
+                        GameManager.Instance.GetItemDetails(ItemsForSale[i]).ItemSprite;
+                    BuyItemButtons[i].AmountText.text = "";
                 }
                 else
                 {
-                    buyItemButtons[i].GetButtonImage().gameObject.SetActive(false);
-                    buyItemButtons[i].GetAmountText().text = "";
+                    BuyItemButtons[i].ButtonImage.gameObject.SetActive(false);
+                    BuyItemButtons[i].AmountText.text = "";
                 }
             }
         }
 
         public void OpenSellMenu()
         {
-            sellItemButtons[0].Press();
+            SellItemButtons[0].Press();
 
-            sellMenu.SetActive(true);
-            buyMenu.SetActive(false);
+            SellMenu.SetActive(true);
+            BuyMenu.SetActive(false);
 
             ShowSellItems();
         }
 
         private void ShowSellItems()
         {
-            GameManager.instance.SortItems();
-            for (var i = 0; i < sellItemButtons.Length; i++)
+            GameManager.Instance.SortItems();
+            for (var i = 0; i < SellItemButtons.Length; i++)
             {
-                sellItemButtons[i].SetButtonValue(i);
+                SellItemButtons[i].ButtonValue = i;
 
-                if (GameManager.instance.ItemsHeld()[i] != "")
+                if (GameManager.Instance.ItemsHeld()[i] != "")
                 {
-                    sellItemButtons[i].GetButtonImage().gameObject.SetActive(true);
-                    sellItemButtons[i].GetButtonImage().sprite = GameManager.instance
-                        .GetItemDetails(GameManager.instance.ItemsHeld()[i]).GetItemSprite();
-                    sellItemButtons[i].GetAmountText().text = GameManager.instance.NumberOfItems()[i].ToString();
+                    SellItemButtons[i].ButtonImage.gameObject.SetActive(true);
+                    SellItemButtons[i].ButtonImage.sprite = GameManager.Instance
+                        .GetItemDetails(GameManager.Instance.ItemsHeld()[i]).ItemSprite;
+                    SellItemButtons[i].AmountText.text = GameManager.Instance.NumberOfItems()[i].ToString();
                 }
                 else
                 {
-                    sellItemButtons[i].GetButtonImage().gameObject.SetActive(false);
-                    sellItemButtons[i].GetAmountText().text = "";
+                    SellItemButtons[i].ButtonImage.gameObject.SetActive(false);
+                    SellItemButtons[i].AmountText.text = "";
                 }
             }
         }
 
         public void SelectBuyItem(Item buyItem)
         {
-            selectedItem = buyItem;
-            buyItemName.text = selectedItem.GetItemName();
-            buyItemDescription.text = selectedItem.GetDescription();
-            buyItemValue.text = "Value: " + selectedItem.GetValue() + "g";
+            SelectedItem = buyItem;
+            BuyItemName.text = SelectedItem.ItemName;
+            BuyItemDescription.text = SelectedItem.Description;
+            BuyItemValue.text = "Value: " + SelectedItem.Value + "g";
         }
 
         public void SelectSellItem(Item sellItem)
         {
-            selectedItem = sellItem;
-            sellItemName.text = selectedItem.GetItemName();
-            sellItemDescription.text = selectedItem.GetDescription();
-            sellItemValue.text = "Value: " + Mathf.FloorToInt(selectedItem.GetValue() * .5f) + "g";
+            SelectedItem = sellItem;
+            SellItemName.text = SelectedItem.ItemName;
+            SellItemDescription.text = SelectedItem.Description;
+            SellItemValue.text = "Value: " + Mathf.FloorToInt(SelectedItem.Value * .5f) + "g";
         }
 
         public void BuyItem()
         {
-            if (selectedItem != null)
+            if (SelectedItem != null)
             {
-                if (GameManager.instance.CurrentGold() >= selectedItem.GetValue())
+                if (GameManager.Instance.CurrentGold() >= SelectedItem.Value)
                 {
-                    GameManager.instance.SubtractGold(selectedItem.GetValue());
+                    GameManager.Instance.SubtractGold(SelectedItem.Value);
 
-                    GameManager.instance.AddItem(selectedItem.GetItemName());
+                    GameManager.Instance.AddItem(SelectedItem.ItemName);
                 }
             }
 
-            goldText.text = GameManager.instance.CurrentGold() + "g";
+            GoldText.text = GameManager.Instance.CurrentGold() + "g";
         }
 
         public void SellItem()
         {
-            if (selectedItem != null)
+            if (SelectedItem != null)
             {
-                GameManager.instance.AddGold(Mathf.FloorToInt(selectedItem.GetValue() * .5f));
+                GameManager.Instance.AddGold(Mathf.FloorToInt(SelectedItem.Value * .5f));
 
-                GameManager.instance.RemoveItem(selectedItem.GetItemName());
+                GameManager.Instance.RemoveItem(SelectedItem.ItemName);
             }
 
-            goldText.text = GameManager.instance.CurrentGold() + "g";
+            GoldText.text = GameManager.Instance.CurrentGold() + "g";
 
             ShowSellItems();
         }

@@ -5,23 +5,23 @@ namespace Core
     public class DialogActivator : MonoBehaviour
     {
 
-        [SerializeField] string[] lines;
+        [SerializeField] private string[] lines;
 
-        bool _canActivate;
+        private bool _canActivate;
 
-        [SerializeField] bool isPerson = true;
+        [SerializeField] private bool isPerson = true;
 
-        [SerializeField] bool shouldActivateQuest;
-        [SerializeField] string questToMark;
-        [SerializeField] bool markComplete;
+        [SerializeField] private bool shouldActivateQuest;
+        [SerializeField] private string questToMark;
+        [SerializeField] private bool markComplete;
 
 
-        void Update()
+        private void Update()
         {
             if (!_canActivate || !Input.GetButtonDown("Fire1") ||
-                DialogManager.instance.GetDialogBox().activeInHierarchy) return;
-            DialogManager.instance.ShowDialog(lines, isPerson);
-            DialogManager.instance.ShouldActivateQuestAtEnd(questToMark, markComplete);
+                DialogManager.Instance.GetDialogBox().activeInHierarchy) return;
+            DialogManager.Instance.ShowDialog(lines, isPerson);
+            DialogManager.Instance.ShouldActivateQuestAtEnd(questToMark, markComplete);
         }
 
         public bool CanActivate()
@@ -34,7 +34,7 @@ namespace Core
             _canActivate = activate;
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
@@ -42,7 +42,7 @@ namespace Core
             }
         }
 
-        void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {

@@ -4,31 +4,31 @@ namespace Movement
 {
     public class PlayerController : MonoBehaviour
     {
-        Rigidbody2D _playerRigidbody2D;
-        float _playerMoveSpeed;
-        Animator _playerAnimator;
+        private Rigidbody2D _playerRigidbody2D;
+        private float _playerMoveSpeed;
+        private Animator _playerAnimator;
 
-        public static PlayerController instance;
+        public static PlayerController Instance { get; set; }
 
-        [SerializeField] string areaTransitionName;
-        Vector3 _bottomLeftLimit;
-        Vector3 _topRightLimit;
+        public string AreaTransitionName { get; set; }
+        private Vector3 _bottomLeftLimit;
+        private Vector3 _topRightLimit;
 
-        bool _canMove = true;
+        private bool _canMove = true;
 
-        void Start()
+        private void Start()
         {
             _playerRigidbody2D = GetComponent<Rigidbody2D>();
             _playerMoveSpeed = 4f;
             _playerAnimator = GetComponent<Animator>();
 
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
             else
             {
-                if (instance != this)
+                if (Instance != this)
                 {
                     Destroy(gameObject);
                 }
@@ -37,7 +37,7 @@ namespace Movement
             DontDestroyOnLoad(gameObject);
         }
 
-        void Update()
+        private void Update()
         {
             if (_canMove)
             {
@@ -67,16 +67,6 @@ namespace Movement
                 Mathf.Clamp(position.y, _bottomLeftLimit.y, _topRightLimit.y),
                 position.z);
             transform.position = position;
-        }
-
-        public string GetAreaTransitionName()
-        {
-            return areaTransitionName;
-        }
-
-        public void SetAreaTransitionName(string set)
-        {
-            areaTransitionName = set;
         }
 
         public void SetBounds(Vector3 botLeft, Vector3 topRight)

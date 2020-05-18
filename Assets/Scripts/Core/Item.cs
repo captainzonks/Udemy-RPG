@@ -5,150 +5,68 @@ namespace Core
 {
    public class Item : MonoBehaviour
     {
-        private readonly bool _isItem;
-        private readonly bool _isWeapon;
-        private readonly bool _isArmor;
+        public bool IsItem { get; set; }
+        public bool IsWeapon { get; set; }
+        public bool IsArmor { get; set; }
 
-        private readonly string _itemName;
-        private readonly string _description;
-        private readonly int _value;
-        private readonly Sprite _itemSprite;
+        public string ItemName { get; set; }
+        public string Description { get; set; }
+        public int Value { get; set; }
+        public Sprite ItemSprite { get; set; }
 
-        private readonly int _amountToChange;
-        private readonly bool _affectHp;
-        private readonly bool _affectMp;
-        private readonly bool _affectStr;
+        private int AmountToChange { get; set; }
+        private bool AffectHp { get; set; }
+        private bool AffectMp { get; set; }
+        private bool AffectStr { get; set; }
 
-        private readonly int _weaponStrength;
-        private readonly int _armorStrength;
-
-        public Item(bool isItem, bool isWeapon, bool isArmor, string itemName, string description, int value, Sprite itemSprite, int amountToChange, bool affectStr, bool affectHp, bool affectMp, int weaponStrength, int armorStrength)
-        {
-            _isItem = isItem;
-            _isWeapon = isWeapon;
-            _isArmor = isArmor;
-            _itemName = itemName;
-            _description = description;
-            _value = value;
-            _itemSprite = itemSprite;
-            _amountToChange = amountToChange;
-            _affectStr = affectStr;
-            _affectHp = affectHp;
-            _affectMp = affectMp;
-            _weaponStrength = weaponStrength;
-            _armorStrength = armorStrength;
-        }
-
-        public bool IsItem()
-        {
-            return _isItem;
-        }
-
-        public bool IsWeapon()
-        {
-            return _isWeapon;
-        }
-
-        public bool IsArmor()
-        {
-            return _isArmor;
-        }
-
-        public string GetItemName()
-        {
-            return _itemName;
-        }
-
-        public string GetDescription()
-        {
-            return _description;
-        }
-
-        public int GetValue()
-        {
-            return _value;
-        }
-
-        public Sprite GetItemSprite()
-        {
-            return _itemSprite;
-        }
-
-        public int GetAmountToChange()
-        {
-            return _amountToChange;
-        }
-
-        public bool GetAffectHP()
-        {
-            return _affectHp;
-        }
-
-        public bool GetAffectMP()
-        {
-            return _affectMp;
-        }
-
-        public bool GetAffectStr()
-        {
-            return _affectStr;
-        }
-
-        public int GetWeaponStr()
-        {
-            return _weaponStrength;
-        }
-
-        public int GetArmorStr()
-        {
-            return _armorStrength;
-        }
+        private int WeaponStrength { get; set; }
+        private int ArmorStrength { get; set; }
 
         public void Use(int charToUseOn)
         {
-            var selectedChar = GameManager.instance.GetPlayerStats()[charToUseOn];
+            var selectedChar = GameManager.Instance.GetPlayerStats()[charToUseOn];
 
-            if (_isItem)
+            if (IsItem)
             {
-                if (_affectHp)
+                if (AffectHp)
                 {
-                    selectedChar.ChangeHealth(_amountToChange);
+                    selectedChar.ChangeHealth(AmountToChange);
                 }
 
-                if (_affectMp)
+                if (AffectMp)
                 { 
-                    selectedChar.ChangeMana(_amountToChange);
+                    selectedChar.ChangeMana(AmountToChange);
                 }
 
-                if (_affectStr)
+                if (AffectStr)
                 {
-                    selectedChar.ChangeStrength(_amountToChange);
+                    selectedChar.Strength = AmountToChange;
                 }
             }
 
-            if (_isWeapon)
+            if (IsWeapon)
             {
-                if (selectedChar.GetWeapon() != "")
+                if (selectedChar.EquippedWpn != "")
                 {
-                    GameManager.instance.AddItem(selectedChar.GetWeapon());
+                    GameManager.Instance.AddItem(selectedChar.EquippedWpn);
                 }
 
-                selectedChar.ChangeWeapon(_itemName);
-                selectedChar.ChangeWpnPwr(_weaponStrength);
+                selectedChar.EquippedWpn = ItemName;
+                selectedChar.WpnPwr = WeaponStrength;
             }
 
-            if (_isArmor)
+            if (IsArmor)
             {
-                if (selectedChar.GetArmor() != "")
+                if (selectedChar.EquippedArmr != "")
                 {
-                    GameManager.instance.AddItem(selectedChar.GetArmor());
+                    GameManager.Instance.AddItem(selectedChar.EquippedArmr);
                 }
 
-                selectedChar.ChangeArmor(_itemName);
-                selectedChar.ChangeArmrPwr(_armorStrength);
+                selectedChar.EquippedArmr = ItemName;
+                selectedChar.ArmrPwr = ArmorStrength;
             }
 
-            GameManager.instance.RemoveItem(_itemName);
+            GameManager.Instance.RemoveItem(ItemName);
         }
     } 
 }

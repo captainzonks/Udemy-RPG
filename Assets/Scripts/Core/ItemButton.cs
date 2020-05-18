@@ -5,60 +5,33 @@ namespace Core
 {
     public class ItemButton : MonoBehaviour
     {
-        private Image _buttonImage;
-        private Text _amountText;
-        private int _buttonValue;
-
-        void Start()
-        {
-            _buttonImage = GetComponent<Image>();
-            _amountText = GetComponent<Text>();
-            _buttonValue = 0;
-        }
+        public Image ButtonImage { get; set; }
+        public Text AmountText { get; set; }
+        public int ButtonValue { get; set; }
 
         public void Press()
         {
-            if (GameMenu.instance.GetTheMenu().activeInHierarchy)
+            if (GameMenu.Instance.GetTheMenu().activeInHierarchy)
             {
-                if (GameManager.instance.ItemsHeld()[_buttonValue] != "")
+                if (GameManager.Instance.ItemsHeld()[ButtonValue] != "")
                 {
-                    GameMenu.instance.SelectItem(
-                        GameManager.instance.GetItemDetails(GameManager.instance.ItemsHeld()[_buttonValue]));
+                    GameMenu.Instance.SelectItem(
+                        GameManager.Instance.GetItemDetails(GameManager.Instance.ItemsHeld()[ButtonValue]));
                 }
             }
 
-            if (!Shop.instance.shopMenu.activeInHierarchy) return;
-            if (Shop.instance.buyMenu.activeInHierarchy)
+            if (!Shop.Instance.ShopMenu.activeInHierarchy) return;
+            if (Shop.Instance.BuyMenu.activeInHierarchy)
             {
-                Shop.instance.SelectBuyItem(
-                    GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[_buttonValue]));
+                Shop.Instance.SelectBuyItem(
+                    GameManager.Instance.GetItemDetails(Shop.Instance.ItemsForSale[ButtonValue]));
             }
 
-            if (Shop.instance.sellMenu.activeInHierarchy)
+            if (Shop.Instance.SellMenu.activeInHierarchy)
             {
-                Shop.instance.SelectSellItem(
-                    GameManager.instance.GetItemDetails(GameManager.instance.ItemsHeld()[_buttonValue]));
+                Shop.Instance.SelectSellItem(
+                    GameManager.Instance.GetItemDetails(GameManager.Instance.ItemsHeld()[ButtonValue]));
             }
-        }
-
-        public Image GetButtonImage()
-        {
-            return _buttonImage;
-        }
-
-        public Text GetAmountText()
-        {
-            return _amountText;
-        }
-
-        public int GetButtonValue()
-        {
-            return _buttonValue;
-        }
-
-        public void SetButtonValue(int set)
-        {
-            _buttonValue = set;
         }
     }
 }

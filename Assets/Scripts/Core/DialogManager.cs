@@ -6,29 +6,29 @@ namespace Core
 {
     public class DialogManager : MonoBehaviour
     {
-        [SerializeField] Text dialogText;
-        [SerializeField] Text nameText;
-        [SerializeField] GameObject dialogBox;
-        [SerializeField] GameObject nameBox;
+        [SerializeField] private Text dialogText;
+        [SerializeField] private Text nameText;
+        [SerializeField] private GameObject dialogBox;
+        [SerializeField] private GameObject nameBox;
 
-        [SerializeField] string[] dialogLines;
+        [SerializeField] private string[] dialogLines;
 
-        [SerializeField] int currentLine;
+        [SerializeField] private int currentLine;
 
-        public static DialogManager instance;
+        public static DialogManager Instance { get; private set; }
 
-        bool _justStarted;
+        private bool _justStarted;
 
-        string _questToMark;
-        bool _markQuestComplete;
-        bool _shouldMarkQuest;
+        private string _questToMark;
+        private bool _markQuestComplete;
+        private bool _shouldMarkQuest;
 
-        void Start()
+        private void Start()
         {
-            instance = this;
+            Instance = this;
         }
 
-        void Update()
+        private void Update()
         {
             if (!dialogBox.activeInHierarchy) return;
             if (!Input.GetButtonUp("Fire1")) return;
@@ -40,17 +40,17 @@ namespace Core
                 {
                     dialogBox.SetActive(false);
 
-                    GameManager.instance.ModifyDialogActive(false);
+                    GameManager.Instance.ModifyDialogActive(false);
 
                     if (!_shouldMarkQuest) return;
                     _shouldMarkQuest = false;
                     if (_markQuestComplete)
                     {
-                        QuestManager.instance.MarkQuestComplete(_questToMark);
+                        QuestManager.Instance.MarkQuestComplete(_questToMark);
                     }
                     else
                     {
-                        QuestManager.instance.MarkQuestIncomplete(_questToMark);
+                        QuestManager.Instance.MarkQuestIncomplete(_questToMark);
 
                     }
                 }
@@ -110,10 +110,10 @@ namespace Core
 
             nameBox.SetActive(isPerson);
 
-            GameManager.instance.ModifyDialogActive(true);
+            GameManager.Instance.ModifyDialogActive(true);
         }
 
-        void CheckIfName()
+        private void CheckIfName()
         {
             if (!dialogLines[currentLine].StartsWith("n-")) return;
             nameText.text = dialogLines[currentLine].Replace("n-", "");

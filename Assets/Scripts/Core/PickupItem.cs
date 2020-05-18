@@ -5,13 +5,12 @@ namespace Core
 {
     public class PickupItem : MonoBehaviour
     {
-        private bool canPickup;
+        private bool _canPickup;
 
-        // Update is called once per frame
         private void Update()
         {
-            if (!canPickup || !Input.GetButtonDown("Fire1") || !PlayerController.instance.CanMove()) return;
-            GameManager.instance.AddItem(GetComponent<Item>().GetItemName());
+            if (!_canPickup || !Input.GetButtonDown("Fire1") || !PlayerController.Instance.CanMove()) return;
+            GameManager.Instance.AddItem(GetComponent<Item>().ItemName);
             Destroy(gameObject);
         }
 
@@ -19,7 +18,7 @@ namespace Core
         {
             if (other.CompareTag("Player"))
             {
-                canPickup = true;
+                _canPickup = true;
             }
         }
 
@@ -27,7 +26,7 @@ namespace Core
         {
             if (other.CompareTag("Player"))
             {
-                canPickup = false;
+                _canPickup = false;
             }
         }
     }

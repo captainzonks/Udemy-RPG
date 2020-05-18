@@ -5,27 +5,17 @@ namespace Core
 {
     public class AreaEntrance : MonoBehaviour
     {
-        [SerializeField] string transitionName;
+        public string TransitionName { set; get; }
 
-        void Start()
+        private void Start()
         {
-            if (transitionName == PlayerController.instance.GetAreaTransitionName())
+            if (TransitionName == PlayerController.Instance.AreaTransitionName)
             {
-                PlayerController.instance.transform.position = transform.position;
+                PlayerController.Instance.transform.position = transform.position;
             }
 
             UIFade.instance.FadeFromBlack();
-            GameManager.instance.ModifyFading(false);
-        }
-
-        public string GetTransitionName()
-        {
-            return transitionName;
-        }
-
-        public void SetTransitionName(string newTransitionName)
-        {
-            transitionName = newTransitionName;
+            GameManager.Instance.ModifyFading(false);
         }
     }
 }

@@ -4,25 +4,25 @@ namespace Quest
 {
     public class QuestObjectActivator : MonoBehaviour
     {
-        [SerializeField] GameObject objectToActivate;
+        [SerializeField] private GameObject objectToActivate;
 
-        [SerializeField] string questToCheck;
+        [SerializeField] private string questToCheck;
 
-        [SerializeField] bool activeIfComplete;
+        [SerializeField] private bool activeIfComplete;
 
-        bool initialCheckDone;
+        private bool _initialCheckDone;
 
-        void Update()
+        private void Update()
         {
-            if (initialCheckDone) return;
-            initialCheckDone = true;
+            if (_initialCheckDone) return;
+            _initialCheckDone = true;
 
             CheckCompletion();
         }
 
         public void CheckCompletion()
         {
-            if (QuestManager.instance.CheckIfComplete(questToCheck))
+            if (QuestManager.Instance.CheckIfComplete(questToCheck))
             {
                 objectToActivate.SetActive(activeIfComplete);
 

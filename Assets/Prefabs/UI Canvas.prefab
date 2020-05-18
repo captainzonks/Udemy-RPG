@@ -2445,7 +2445,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 122.015, y: -423.385}
+  m_AnchoredPosition: {x: 122.015, y: -300.275}
   m_SizeDelta: {x: 244.03, y: 108.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &501546216
@@ -3659,7 +3659,7 @@ GameObject:
   - component: {fileID: 692297325}
   m_Layer: 5
   m_Name: Info Panel
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4667,7 +4667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &886428898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4970,7 +4970,7 @@ GameObject:
   - component: {fileID: 954251645}
   m_Layer: 5
   m_Name: Buttons
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5677,7 +5677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1076380245
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6485,7 +6485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1242701035
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7482,7 +7482,7 @@ GameObject:
   - component: {fileID: 1423002138}
   m_Layer: 5
   m_Name: Menu
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25382,7 +25382,7 @@ GameObject:
   - component: {fileID: 1078947468}
   m_Layer: 5
   m_Name: UI Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25743,7 +25743,7 @@ GameObject:
   - component: {fileID: 2977830565540613113}
   - component: {fileID: 2977830565540613118}
   m_Layer: 5
-  m_Name: FadeImage
+  m_Name: BlackScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,20 +5,20 @@ namespace Core
 {
     public class ShopKeeper : MonoBehaviour
     {
-        bool _canOpen;
+        private bool _canOpen;
 
-        [SerializeField] string[] itemsForSale = new string[40];
+        [SerializeField] private string[] itemsForSale = new string[40];
 
-        void Update()
+        private void Update()
         {
-            if (!_canOpen || !Input.GetButtonDown("Fire1") || !PlayerController.instance.CanMove() ||
-                Shop.instance.shopMenu.activeInHierarchy) return;
-            Shop.instance.itemsForSale = itemsForSale;
+            if (!_canOpen || !Input.GetButtonDown("Fire1") || !PlayerController.Instance.CanMove() ||
+                Shop.Instance.ShopMenu.activeInHierarchy) return;
+            Shop.Instance.ItemsForSale = itemsForSale;
 
-            Shop.instance.OpenShop();
+            Shop.Instance.OpenShop();
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
@@ -26,7 +26,7 @@ namespace Core
             }
         }
 
-        void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {

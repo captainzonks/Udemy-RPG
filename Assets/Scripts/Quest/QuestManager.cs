@@ -4,21 +4,21 @@ namespace Quest
 {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] string[] questMarkerNames;
-        [SerializeField] bool[] questMarkersComplete;
+        [SerializeField] private string[] questMarkerNames;
+        [SerializeField] private bool[] questMarkersComplete;
 
-        public static QuestManager instance;
+        public static QuestManager Instance { get; private set; }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            instance = this;
+            Instance = this;
 
             questMarkersComplete = new bool[questMarkerNames.Length];
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (!Input.GetKeyDown(KeyCode.Q)) return;
             Debug.Log(CheckIfComplete("quest test"));
@@ -26,7 +26,7 @@ namespace Quest
             MarkQuestIncomplete("fight the demon");
         }
 
-        int GetQuestNumber(string questToFind)
+        private int GetQuestNumber(string questToFind)
         {
             for (var i = 0; i < questMarkerNames.Length; i++)
             {
@@ -57,7 +57,7 @@ namespace Quest
             UpdateLocalQuestObjects();
         }
 
-        void UpdateLocalQuestObjects()
+        private void UpdateLocalQuestObjects()
         {
             var questObjects = FindObjectsOfType<QuestObjectActivator>();
             if (questObjects.Length <= 0) return;

@@ -5,17 +5,17 @@ namespace Movement
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] Transform target;
+        [SerializeField] private Transform target;
 
-        [SerializeField] Tilemap theMap;
-        Vector3 _bottomLeftLimit;
-        Vector3 _topRightLimit;
+        [SerializeField] private Tilemap theMap;
+        private Vector3 _bottomLeftLimit;
+        private Vector3 _topRightLimit;
 
-        float _halfHeight;
-        float _halfWidth;
+        private float _halfHeight;
+        private float _halfWidth;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             //target = PlayerController.instance.transform;
             target = FindObjectOfType<PlayerController>().transform;
@@ -31,11 +31,11 @@ namespace Movement
             _bottomLeftLimit = localBounds.min + new Vector3(_halfWidth, _halfHeight, 0f);
             _topRightLimit = localBounds.max + new Vector3(-_halfWidth, -_halfHeight, 0f);
 
-            PlayerController.instance.SetBounds(localBounds.min, localBounds.max);
+            PlayerController.Instance.SetBounds(localBounds.min, localBounds.max);
         }
 
         // LateUpdate is called once per frame after Update
-        void LateUpdate()
+        private void LateUpdate()
         {
             var transformPosition = transform.position;
             var targetPosition = target.position;

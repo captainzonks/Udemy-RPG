@@ -8,36 +8,36 @@ namespace Core
     public class GameManager : MonoBehaviour
     {
 
-        public static GameManager instance;
+        public static GameManager Instance { get; private set; }
 
-        [SerializeField] CharStats[] playerStats;
+        [SerializeField] private CharStats[] playerStats;
 
-        [SerializeField] bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive;
+        [SerializeField] private bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive;
 
-        [SerializeField] string[] itemsHeld;
-        [SerializeField] int[] numberOfItems;
-        [SerializeField] Item[] referenceItems;
+        [SerializeField] private string[] itemsHeld;
+        [SerializeField] private int[] numberOfItems;
+        [SerializeField] private Item[] referenceItems;
 
-        [SerializeField] int currentGold;
+        [SerializeField] private int currentGold;
 
-        void Start()
+        private void Start()
         {
-            instance = this;
+            Instance = this;
 
             DontDestroyOnLoad(gameObject);
 
             SortItems();
         }
 
-        void Update()
+        private void Update()
         {
             if(gameMenuOpen || dialogActive || fadingBetweenAreas || shopActive)
             {
-                PlayerController.instance.ModifyMovement(false);
+                PlayerController.Instance.ModifyMovement(false);
             }
             else
             {
-                PlayerController.instance.ModifyMovement(true);
+                PlayerController.Instance.ModifyMovement(true);
             }
 
             // debug test
@@ -124,7 +124,7 @@ namespace Core
 
         public Item GetItemDetails(string itemToGrab)
         {
-            return referenceItems.FirstOrDefault(t => t.GetItemName() == itemToGrab);
+            return referenceItems.FirstOrDefault(t => t.ItemName == itemToGrab);
         }
 
         public void SortItems()
@@ -169,7 +169,7 @@ namespace Core
                 var itemExists = false;
                 for (var i = 0; i < referenceItems.Length; i++)
                 {
-                    if (referenceItems[i].GetItemName() != itemToAdd) continue;
+                    if (referenceItems[i].ItemName != itemToAdd) continue;
                     itemExists = true;
 
                     i = referenceItems.Length;
@@ -186,7 +186,7 @@ namespace Core
                 }
             }
 
-            GameMenu.instance.ShowItems();
+            GameMenu.Instance.ShowItems();
         }
 
         public void RemoveItem(string itemToRemove)
@@ -212,7 +212,7 @@ namespace Core
                     itemsHeld[itemPosition] = "";
                 }
 
-                GameMenu.instance.ShowItems();
+                GameMenu.Instance.ShowItems();
             }
             else
             {
