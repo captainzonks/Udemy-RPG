@@ -8,123 +8,52 @@ namespace Core
     public class GameManager : MonoBehaviour
     {
 
-        public static GameManager Instance { get; private set; }
+        public static GameManager instance;
 
-        [SerializeField] private CharStats[] playerStats;
+        public CharStats[] playerStats;
 
-        [SerializeField] private bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive;
+        public bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive;
 
-        [SerializeField] private string[] itemsHeld;
-        [SerializeField] private int[] numberOfItems;
-        [SerializeField] private Item[] referenceItems;
+        public string[] itemsHeld;
+        public int[] numberOfItems;
+        public Item[] referenceItems;
 
-        [SerializeField] private int currentGold;
+        public int currentGold;
 
+        // Start is called before the first frame update
         private void Start()
         {
-            Instance = this;
+            instance = this;
 
             DontDestroyOnLoad(gameObject);
 
             SortItems();
         }
 
+        // Update is called once per frame
         private void Update()
         {
             if(gameMenuOpen || dialogActive || fadingBetweenAreas || shopActive)
             {
-                PlayerController.Instance.ModifyMovement(false);
+                PlayerController.instance.canMove = false;
             }
             else
             {
-                PlayerController.Instance.ModifyMovement(true);
+                PlayerController.instance.canMove = true;
             }
 
             // debug test
             if (!Input.GetKeyDown(KeyCode.J)) return;
             AddItem("Iron Armor");
+            AddItem("Fooey");
 
             RemoveItem("Health Potion");
-        }
-
-        public CharStats[] GetPlayerStats()
-        {
-            return playerStats;
-        }
-
-        public bool GameMenuOpen()
-        {
-            return gameMenuOpen;
-        }
-
-        public void ModifyGameMenu(bool menu)
-        {
-            gameMenuOpen = menu;
-        }
-
-        public bool DialogActive()
-        {
-            return dialogActive;
-        }
-
-        public void ModifyDialogActive(bool active)
-        {
-            dialogActive = active;
-        }
-
-        public bool FadingBetweenAreas()
-        {
-            return fadingBetweenAreas;
-        }
-
-        public void ModifyFading(bool fading)
-        {
-            fadingBetweenAreas = fading;
-        }
-
-        public bool ShopActive()
-        {
-            return shopActive;
-        }
-
-        public void SetShopActive(bool active)
-        {
-            shopActive = active;
-        }
-
-        public string[] ItemsHeld()
-        {
-            return itemsHeld;
-        }
-
-        public int[] NumberOfItems()
-        {
-            return numberOfItems;
-        }
-
-        public Item[] ReferenceItems()
-        {
-            return referenceItems;
-        }
-
-        public int CurrentGold()
-        {
-            return currentGold;
-        }
-
-        public void SubtractGold(int change)
-        {
-            currentGold -= change;
-        }
-
-        public void AddGold(int change)
-        {
-            currentGold += change;
+            RemoveItem("Falsey");
         }
 
         public Item GetItemDetails(string itemToGrab)
         {
-            return referenceItems.FirstOrDefault(t => t.ItemName == itemToGrab);
+            return referenceItems.FirstOrDefault(t => t.itemName == itemToGrab);
         }
 
         public void SortItems()
@@ -169,7 +98,7 @@ namespace Core
                 var itemExists = false;
                 for (var i = 0; i < referenceItems.Length; i++)
                 {
-                    if (referenceItems[i].ItemName != itemToAdd) continue;
+                    if (referenceItems[i].itemName != itemToAdd) continue;
                     itemExists = true;
 
                     i = referenceItems.Length;
@@ -186,7 +115,7 @@ namespace Core
                 }
             }
 
-            GameMenu.Instance.ShowItems();
+            GameMenu.instance.ShowItems();
         }
 
         public void RemoveItem(string itemToRemove)
@@ -212,7 +141,7 @@ namespace Core
                     itemsHeld[itemPosition] = "";
                 }
 
-                GameMenu.Instance.ShowItems();
+                GameMenu.instance.ShowItems();
             }
             else
             {

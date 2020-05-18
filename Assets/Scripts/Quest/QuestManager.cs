@@ -4,20 +4,18 @@ namespace Quest
 {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] private string[] questMarkerNames;
-        [SerializeField] private bool[] questMarkersComplete;
+        public string[] questMarkerNames;
+        public bool[] questMarkersComplete;
 
-        public static QuestManager Instance { get; private set; }
+        public static QuestManager instance;
 
-        // Start is called before the first frame update
         private void Start()
         {
-            Instance = this;
+            instance = this;
 
             questMarkersComplete = new bool[questMarkerNames.Length];
         }
 
-        // Update is called once per frame
         private void Update()
         {
             if (!Input.GetKeyDown(KeyCode.Q)) return;
@@ -57,7 +55,7 @@ namespace Quest
             UpdateLocalQuestObjects();
         }
 
-        private void UpdateLocalQuestObjects()
+        private static void UpdateLocalQuestObjects()
         {
             var questObjects = FindObjectsOfType<QuestObjectActivator>();
             if (questObjects.Length <= 0) return;

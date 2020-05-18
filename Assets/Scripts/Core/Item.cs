@@ -1,72 +1,80 @@
-﻿using Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core
 {
-   public class Item : MonoBehaviour
+    public class Item : MonoBehaviour
     {
-        public bool IsItem { get; set; }
-        public bool IsWeapon { get; set; }
-        public bool IsArmor { get; set; }
+        [Header("Item Type")] public bool isItem;
+        public bool isWeapon;
+        public bool isArmor;
 
-        public string ItemName { get; set; }
-        public string Description { get; set; }
-        public int Value { get; set; }
-        public Sprite ItemSprite { get; set; }
+        [Header("Item Details")] public string itemName;
+        public string description;
+        public int value;
+        public Sprite itemSprite;
 
-        private int AmountToChange { get; set; }
-        private bool AffectHp { get; set; }
-        private bool AffectMp { get; set; }
-        private bool AffectStr { get; set; }
+        [Header("Item Details")] public int amountToChange;
+        public bool affectHP, affectMP, affectStr;
 
-        private int WeaponStrength { get; set; }
-        private int ArmorStrength { get; set; }
+        [Header("Weapon/Armor Details")] public int weaponStrength;
+
+        public int armorStrength;
 
         public void Use(int charToUseOn)
         {
-            var selectedChar = GameManager.Instance.GetPlayerStats()[charToUseOn];
+            var selectedChar = GameManager.instance.playerStats[charToUseOn];
 
-            if (IsItem)
+            if (isItem)
             {
-                if (AffectHp)
+                if (affectHP)
                 {
-                    selectedChar.ChangeHealth(AmountToChange);
+                    selectedChar.currentHP += amountToChange;
+
+                    if (selectedChar.currentHP > selectedChar.maxHP)
+                    {
+                        selectedChar.currentHP = selectedChar.maxHP;
+                    }
                 }
 
-                if (AffectMp)
-                { 
-                    selectedChar.ChangeMana(AmountToChange);
+                if (affectMP)
+                {
+                    selectedChar.currentMP += amountToChange;
+
+                    if (selectedChar.currentMP > selectedChar.maxMP)
+                    {
+                        selectedChar.currentMP = selectedChar.maxMP;
+                    }
                 }
 
-                if (AffectStr)
+                if (affectStr)
                 {
-                    selectedChar.Strength = AmountToChange;
+                    selectedChar.strength += amountToChange;
                 }
             }
 
-            if (IsWeapon)
+            if (isWeapon)
             {
-                if (selectedChar.EquippedWpn != "")
+                if (selectedChar.equippedWpn != "")
                 {
-                    GameManager.Instance.AddItem(selectedChar.EquippedWpn);
+                    GameManager.instance.AddItem(selectedChar.equippedWpn);
                 }
 
-                selectedChar.EquippedWpn = ItemName;
-                selectedChar.WpnPwr = WeaponStrength;
+                selectedChar.equippedWpn = itemName;
+                selectedChar.wpnPwr = weaponStrength;
             }
 
-            if (IsArmor)
+            if (isArmor)
             {
-                if (selectedChar.EquippedArmr != "")
+                if (selectedChar.equippedArmr != "")
                 {
-                    GameManager.Instance.AddItem(selectedChar.EquippedArmr);
+                    GameManager.instance.AddItem(selectedChar.equippedArmr);
                 }
 
-                selectedChar.EquippedArmr = ItemName;
-                selectedChar.ArmrPwr = ArmorStrength;
+                selectedChar.equippedArmr = itemName;
+                selectedChar.armrPwr = armorStrength;
             }
 
-            GameManager.Instance.RemoveItem(ItemName);
+            GameManager.instance.RemoveItem(itemName);
         }
-    } 
+    }
 }

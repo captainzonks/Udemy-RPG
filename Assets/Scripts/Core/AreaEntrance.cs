@@ -5,17 +5,18 @@ namespace Core
 {
     public class AreaEntrance : MonoBehaviour
     {
-        public string TransitionName { set; get; }
+        public string transitionName;
 
+        // Start is called before the first frame update
         private void Start()
         {
-            if (TransitionName == PlayerController.Instance.AreaTransitionName)
+            if (transitionName == PlayerController.instance.areaTransitionName)
             {
-                PlayerController.Instance.transform.position = transform.position;
+                PlayerController.instance.transform.position = transform.position;
             }
 
             UIFade.instance.FadeFromBlack();
-            GameManager.Instance.ModifyFading(false);
+            GameManager.instance.fadingBetweenAreas = false;
         }
     }
 }

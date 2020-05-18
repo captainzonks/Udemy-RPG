@@ -5,24 +5,25 @@ namespace Core
 {
     public class ShopKeeper : MonoBehaviour
     {
-        private bool _canOpen;
+        private bool canOpen;
 
-        [SerializeField] private string[] itemsForSale = new string[40];
+        public string[] itemsForSale = new string[40];
 
+        // Update is called once per frame
         private void Update()
         {
-            if (!_canOpen || !Input.GetButtonDown("Fire1") || !PlayerController.Instance.CanMove() ||
-                Shop.Instance.ShopMenu.activeInHierarchy) return;
-            Shop.Instance.ItemsForSale = itemsForSale;
+            if (!canOpen || !Input.GetButtonDown("Fire1") || !PlayerController.instance.canMove ||
+                Shop.instance.shopMenu.activeInHierarchy) return;
+            Shop.instance.itemsForSale = itemsForSale;
 
-            Shop.Instance.OpenShop();
+            Shop.instance.OpenShop();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                _canOpen = true;
+                canOpen = true;
             }
         }
 
@@ -30,7 +31,7 @@ namespace Core
         {
             if (other.CompareTag("Player"))
             {
-                _canOpen = false;
+                canOpen = false;
             }
         }
     }

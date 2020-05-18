@@ -4,30 +4,30 @@ namespace Quest
 {
     public class QuestMarker : MonoBehaviour
     {
-        [SerializeField] private string questToMark;
-        [SerializeField] private bool markComplete;
+        public string questToMark;
+        public bool markComplete;
 
-        [SerializeField] private bool markOnEnter;
-        private bool _canMark;
+        public bool markOnEnter;
+        private bool canMark;
 
-        [SerializeField] private bool deactivateOnMarking;
+        public bool deactivateOnMarking;
 
         private void Update()
         {
-            if (!_canMark || !Input.GetButtonDown("Fire1")) return;
-            _canMark = false;
+            if (!canMark || !Input.GetButtonDown("Fire1")) return;
+            canMark = false;
             MarkQuest();
         }
 
-        private void MarkQuest()
+        public void MarkQuest()
         {
             if (markComplete)
             {
-                QuestManager.Instance.MarkQuestComplete(questToMark);
+                QuestManager.instance.MarkQuestComplete(questToMark);
             }
             else
             {
-                QuestManager.Instance.MarkQuestIncomplete(questToMark);
+                QuestManager.instance.MarkQuestIncomplete(questToMark);
             }
 
             gameObject.SetActive(!deactivateOnMarking);
@@ -42,7 +42,7 @@ namespace Quest
             }
             else
             {
-                _canMark = true;
+                canMark = true;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Quest
         {
             if (other.CompareTag("Player"))
             {
-                _canMark = false;
+                canMark = false;
             }
         }
     }

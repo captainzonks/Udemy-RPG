@@ -4,37 +4,39 @@ namespace Character
 {
     public class CharStats : MonoBehaviour
     {
+        public string charName;
+        public int playerLevel = 1;
+        public int currentEXP;
+        public int[] expToNextLevel;
+        public int maxLevel = 100;
+        public int baseEXP = 1000;
 
-        public string CharName { get; set; }
-        public int PlayerLevel { get; private set; } = 1;
-        public int CurrentExp { get; private set; }
-        public int[] ExpToNextLevel { get; private set; }
-        private int MaxLevel { get; } = 100;
-        private int BaseExp { get; } = 1000;
-        public int CurrentHp { get; private set; }
-        public int MaxHp { get; private set; } = 100;
-        public int CurrentMp { get; private set; }
-        public int MaxMp { get; private set; } = 30;
-        private int[] MpLvlBonus { get; set; }
-        public int Strength { get; set; }
-        public int Defense { get; private set; }
-        public int WpnPwr { get; internal set; }
-        public int ArmrPwr { get; internal set; }
-        public string EquippedWpn { get; internal set; }
-        public string EquippedArmr { get; internal set; }
-        public Sprite CharImage { get; set; }
+        public int currentHP;
+        public int maxHP = 100;
+        public int currentMP;
+        public int maxMP = 30;
+        public int[] mpLvlBonus;
+        public int strength;
+        public int defense;
+        public int wpnPwr;
+        public int armrPwr;
+        public string equippedWpn;
+        public string equippedArmr;
+        public Sprite charImage;
 
+        // Start is called before the first frame update
         private void Start()
         {
-            ExpToNextLevel = new int[MaxLevel];
-            ExpToNextLevel[1] = BaseExp;
+            expToNextLevel = new int[maxLevel];
+            expToNextLevel[1] = baseEXP;
 
-            for (var i = 2; i < ExpToNextLevel.Length; i++)
+            for (var i = 2; i < expToNextLevel.Length; i++)
             {
-                ExpToNextLevel[i] = Mathf.FloorToInt(ExpToNextLevel[i - 1] * 1.05f);
+                expToNextLevel[i] = Mathf.FloorToInt(expToNextLevel[i - 1] * 1.05f);
             }
         }
 
+        // Update is called once per frame
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
@@ -43,53 +45,39 @@ namespace Character
             }
         }
 
-        public void ChangeHealth(int change)
-        {
-            CurrentHp += change;
-            if (CurrentHp > MaxHp)
-                CurrentHp = MaxHp;
-        }
-
-        public void ChangeMana(int change)
-        {
-            CurrentMp += change;
-            if (CurrentMp > MaxMp)
-                CurrentMp = MaxMp;
-        }
-
         private void AddExp(int expToAdd)
         {
-            CurrentExp += expToAdd;
+            currentEXP += expToAdd;
 
-            if (PlayerLevel < MaxLevel)
+            if (playerLevel < maxLevel)
             {
-                if (CurrentExp > ExpToNextLevel[PlayerLevel])
+                if (currentEXP > expToNextLevel[playerLevel])
                 {
-                    CurrentExp -= ExpToNextLevel[PlayerLevel];
+                    currentEXP -= expToNextLevel[playerLevel];
 
-                    PlayerLevel++;
+                    playerLevel++;
 
                     // determine whether to add to strength or defense based on odd or even
-                    if (PlayerLevel % 2 == 0)
+                    if (playerLevel % 2 == 0)
                     {
-                        Strength++;
+                        strength++;
                     }
                     else
                     {
-                        Defense++;
+                        defense++;
                     }
 
-                    MaxHp = Mathf.FloorToInt(MaxHp * 1.05f);
-                    CurrentHp = MaxHp;
+                    maxHP = Mathf.FloorToInt(maxHP * 1.05f);
+                    currentHP = maxHP;
 
-                    MaxMp += MpLvlBonus[PlayerLevel];
-                    CurrentMp = MaxMp;
+                    maxMP += mpLvlBonus[playerLevel];
+                    currentMP = maxMP;
                 }
             }
 
-            if (PlayerLevel >= MaxLevel)
+            if (playerLevel >= maxLevel)
             {
-                CurrentExp = 0;
+                currentEXP = 0;
             }
         }
     }

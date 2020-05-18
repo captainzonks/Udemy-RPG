@@ -7,18 +7,18 @@ namespace Core
     public class AreaExit : MonoBehaviour
     {
 
-        [SerializeField] private string areaToLoad;
+        public string areaToLoad;
 
-        [SerializeField] private string areaTransitionName;
+        public string areaTransitionName;
 
-        [SerializeField] private AreaEntrance theEntrance;
+        public AreaEntrance theEntrance;
 
-        [SerializeField] private float waitToLoad = 1f;
-        [SerializeField] private bool shouldLoadAfterFade;
+        public float waitToLoad = 1f;
+        private bool shouldLoadAfterFade;
 
         private void Start()
         {
-            theEntrance.TransitionName = areaTransitionName;
+            theEntrance.transitionName = areaTransitionName;
         }
 
         private void Update()
@@ -33,14 +33,14 @@ namespace Core
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
-            
+
             shouldLoadAfterFade = true;
 
-            GameManager.Instance.ModifyFading(true);
+            GameManager.instance.fadingBetweenAreas = true;
 
             UIFade.instance.FadeToBlack();
 
-            PlayerController.Instance.AreaTransitionName = areaTransitionName;
+            PlayerController.instance.areaTransitionName = areaTransitionName;
         }
     }
 }

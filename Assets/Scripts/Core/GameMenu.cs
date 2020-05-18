@@ -6,173 +6,60 @@ namespace Core
 {
     public class GameMenu : MonoBehaviour
     {
-        [SerializeField] private GameObject theMenu;
-        [SerializeField] private GameObject[] windows;
+        public GameObject theMenu;
+        public GameObject[] windows;
 
         private CharStats[] playerStats;
 
-        [SerializeField] private Text[] nameText, hpText, mpText, lvlText, expText;
-        [SerializeField] private Slider[] expSlider;
-        [SerializeField] private Image[] charImage;
-        [SerializeField] private GameObject[] charStatHolder;
+        public Text[] nameText, hpText, mpText, lvlText, expText;
+        public Slider[] expSlider;
+        public Image[] charImage;
+        public GameObject[] charStatHolder;
 
-        [SerializeField] private GameObject[] statusButtons;
-
-        [SerializeField] private Text statusName, statusHP, statusMP, statusStr,
+        public GameObject[] statusButtons;
+        public Text statusName, statusHP, statusMP, statusStr,
             statusDef, statusWpnEqpd, statusWpnPwr, statusArmrEqpd, 
             statusArmrPwr, statusExp;
+        public Image statusImage;
 
-        [SerializeField] private Image statusImage;
+        public ItemButton[] itemButtons;
+        public string selectedItem;
+        public Item activeItem;
+        public Text itemName, itemDescription, useButtonText;
 
-        [SerializeField] private ItemButton[] itemButtons;
-        [SerializeField] private string selectedItem;
-        [SerializeField] private Item activeItem;
-        [SerializeField] private Text itemName, itemDescription, useButtonText;
+        public GameObject itemCharChoiceMenu;
+        public Text[] itemCharChoiceNames;
 
-        [SerializeField] private GameObject itemCharChoiceMenu;
-        [SerializeField] private Text[] itemCharChoiceNames;
+        public static GameMenu instance;
+        public Text goldText;
 
-        public static GameMenu Instance { get; set; }
-        [SerializeField] private Text goldText;
-
+        // Start is called before the first frame update
         private void Start()
         {
-            Instance = this;
+            instance = this;
         }
 
+        // Update is called once per frame
         private void Update()
         {
             if (!Input.GetButtonDown("Fire2")) return;
             if(theMenu.activeInHierarchy)
             {
+                //theMenu.SetActive(false);
+                //GameManager.instance.gameMenuOpen = false;
                 CloseMenu();
             }
             else
             {
                 theMenu.SetActive(true);
                 UpdateMainStats();
-                GameManager.Instance.ModifyGameMenu(true);
+                GameManager.instance.gameMenuOpen = true;
             }
-        }
-
-        public GameObject GetTheMenu()
-        {
-            return theMenu;
-        }
-
-        public GameObject[] GetWindows()
-        {
-            return windows;
-        }
-
-        public CharStats[] GetCharStats()
-        {
-            return playerStats;
-        }
-
-        public Text[] GetNameText()
-        {
-            return nameText;
-        }
-
-        public Text[] GetHPText()
-        {
-            return hpText;
-        }
-
-        public Text[] GetMPText()
-        {
-            return mpText;
-        }
-
-        public Text[] GetLvlText()
-        {
-            return lvlText;
-        }
-
-        public Text[] GetExpText()
-        {
-            return expText;
-        }
-
-        public Slider[] GetExpSlider()
-        {
-            return expSlider;
-        }
-
-        public Image[] GetImage()
-        {
-            return charImage;
-        }
-
-        public GameObject[] GetCharStatHolder()
-        {
-            return charStatHolder;
-        }
-
-        public GameObject[] GetStatusButtons()
-        {
-            return statusButtons;
-        }
-
-        public Text GetStatusName()
-        {
-            return statusName;
-        }
-
-        public Text GetStatusHP()
-        {
-            return statusHP;
-        }
-
-        public Text GetStatusMP()
-        {
-            return statusMP;
-        }
-
-        public Text GetStatusStr()
-        {
-            return statusStr;
-        }
-
-        public Text GetStatusDef()
-        {
-            return statusDef;
-        }
-
-        public Text GetStatusWpnEqpd()
-        {
-            return statusWpnEqpd;
-        }
-
-        public Text GetStatusWpnPwr()
-        {
-            return statusWpnPwr;
-        }
-
-        public Text GetStatusArmrEqpd()
-        {
-            return statusArmrEqpd;
-        }
-
-        public Text GetStatusArmrPwr()
-        {
-            return statusArmrPwr;
-        }
-
-        public Text GetStatusExp()
-        {
-            return statusExp;
-        }
-
-        public Image GetStatusImage()
-        {
-            return statusImage;
         }
 
         private void UpdateMainStats()
         {
-            playerStats = GameManager.Instance.GetPlayerStats();
+            playerStats = GameManager.instance.playerStats;
 
             for(var i = 0; i < playerStats.Length; i++)
             {
@@ -180,14 +67,14 @@ namespace Core
                 {
                     charStatHolder[i].SetActive(true);
 
-                    nameText[i].text = playerStats[i].CharName;
-                    hpText[i].text = "HP: " + playerStats[i].CurrentHp + "/" + playerStats[i].MaxHp;
-                    mpText[i].text = "MP: " + playerStats[i].CurrentMp + "/" + playerStats[i].MaxMp;
-                    lvlText[i].text = "Lvl: " + playerStats[i].PlayerLevel;
-                    expText[i].text = "" + playerStats[i].CurrentExp + "/" + playerStats[i].ExpToNextLevel[playerStats[i].PlayerLevel];
-                    expSlider[i].maxValue = playerStats[i].ExpToNextLevel[playerStats[i].PlayerLevel];
-                    expSlider[i].value = playerStats[i].CurrentExp;
-                    charImage[i].sprite = playerStats[i].CharImage;
+                    nameText[i].text = playerStats[i].charName;
+                    hpText[i].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP;
+                    mpText[i].text = "MP: " + playerStats[i].currentMP + "/" + playerStats[i].maxMP;
+                    lvlText[i].text = "Lvl: " + playerStats[i].playerLevel;
+                    expText[i].text = "" + playerStats[i].currentEXP + "/" + playerStats[i].expToNextLevel[playerStats[i].playerLevel];
+                    expSlider[i].maxValue = playerStats[i].expToNextLevel[playerStats[i].playerLevel];
+                    expSlider[i].value = playerStats[i].currentEXP;
+                    charImage[i].sprite = playerStats[i].charImage;
                 }
                 else
                 {
@@ -195,7 +82,7 @@ namespace Core
                 }
             }
 
-            goldText.text = GameManager.Instance.CurrentGold() + "g";
+            goldText.text = GameManager.instance.currentGold.ToString() + "g";
         }
 
         public void ToggleWindow(int windowNumber)
@@ -216,7 +103,6 @@ namespace Core
 
             itemCharChoiceMenu.SetActive(false);
         }
-
         public void CloseMenu()
         {
             foreach (var t in windows)
@@ -226,7 +112,7 @@ namespace Core
 
             theMenu.SetActive(false);
 
-            GameManager.Instance.ModifyGameMenu(false);
+            GameManager.instance.gameMenuOpen = false;
 
             itemCharChoiceMenu.SetActive(false);
         }
@@ -240,53 +126,53 @@ namespace Core
             for(var i = 0; i < statusButtons.Length; i++)
             {
                 statusButtons[i].SetActive(playerStats[i].gameObject.activeInHierarchy);
-                statusButtons[i].GetComponentInChildren<Text>().text = playerStats[i].CharName;
+                statusButtons[i].GetComponentInChildren<Text>().text = playerStats[i].charName;
             }
         }
 
         public void StatusChar(int selected)
         {
-            statusName.text = playerStats[selected].CharName;
-            statusHP.text = playerStats[selected].CurrentHp + "/" + playerStats[selected].MaxHp;
-            statusMP.text = playerStats[selected].CurrentMp + "/" + playerStats[selected].MaxMp;
-            statusStr.text = playerStats[selected].Strength.ToString();
-            statusDef.text = playerStats[selected].Defense.ToString();
+            statusName.text = playerStats[selected].charName;
+            statusHP.text = playerStats[selected].currentHP.ToString() + "/" + playerStats[selected].maxHP;
+            statusMP.text = playerStats[selected].currentMP.ToString() + "/" + playerStats[selected].maxMP;
+            statusStr.text = playerStats[selected].strength.ToString();
+            statusDef.text = playerStats[selected].defense.ToString();
             
-            if(playerStats[selected].EquippedWpn != "")
+            if(playerStats[selected].equippedWpn != "")
             {
-                statusWpnEqpd.text = playerStats[selected].EquippedWpn;
+                statusWpnEqpd.text = playerStats[selected].equippedWpn;
             }
-            statusWpnPwr.text = playerStats[selected].WpnPwr.ToString();
+            statusWpnPwr.text = playerStats[selected].wpnPwr.ToString();
 
-            if(playerStats[selected].EquippedArmr != "")
+            if(playerStats[selected].equippedArmr != "")
             {
-                statusArmrEqpd.text = playerStats[selected].EquippedArmr;
+                statusArmrEqpd.text = playerStats[selected].equippedArmr;
             }
-            statusArmrPwr.text = playerStats[selected].ArmrPwr.ToString();
+            statusArmrPwr.text = playerStats[selected].armrPwr.ToString();
 
-            statusExp.text = (playerStats[selected].ExpToNextLevel[playerStats[selected].PlayerLevel] - playerStats[selected].CurrentExp).ToString();
+            statusExp.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString();
 
-            statusImage.sprite = playerStats[selected].CharImage;
+            statusImage.sprite = playerStats[selected].charImage;
         }
 
         public void ShowItems()
         {
-            GameManager.Instance.SortItems();
+            GameManager.instance.SortItems();
 
             for(var i = 0; i < itemButtons.Length; i++)
             {
-                itemButtons[i].ButtonValue = i;
+                itemButtons[i].buttonValue = i;
 
-                if(GameManager.Instance.ItemsHeld()[i] != "")
+                if(GameManager.instance.itemsHeld[i] != "")
                 {
-                    itemButtons[i].ButtonImage.gameObject.SetActive(true);
-                    itemButtons[i].ButtonImage.sprite = GameManager.Instance.GetItemDetails(GameManager.Instance.ItemsHeld()[i]).ItemSprite;
-                    itemButtons[i].AmountText.text = GameManager.Instance.NumberOfItems()[i].ToString();
+                    itemButtons[i].buttonImage.gameObject.SetActive(true);
+                    itemButtons[i].buttonImage.sprite = GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[i]).itemSprite;
+                    itemButtons[i].amountText.text = GameManager.instance.numberOfItems[i].ToString();
                 }
                 else
                 {
-                    itemButtons[i].ButtonImage.gameObject.SetActive(false);
-                    itemButtons[i].AmountText.text = "";
+                    itemButtons[i].buttonImage.gameObject.SetActive(false);
+                    itemButtons[i].amountText.text = "";
                 }
             }
         }
@@ -295,25 +181,25 @@ namespace Core
         {
             activeItem = newItem;
 
-            if (activeItem.IsItem)
+            if (activeItem.isItem)
             {
                 useButtonText.text = "Use";
             }
 
-            if (activeItem.IsWeapon || activeItem.IsArmor)
+            if (activeItem.isWeapon || activeItem.isArmor)
             {
                 useButtonText.text = "Equip";
             }
 
-            itemName.text = activeItem.ItemName;
-            itemDescription.text = activeItem.Description;
+            itemName.text = activeItem.itemName;
+            itemDescription.text = activeItem.description;
         }
 
         public void DiscardItem()
         {
             if (activeItem != null)
             {
-                GameManager.Instance.RemoveItem(activeItem.ItemName);
+                GameManager.instance.RemoveItem(activeItem.itemName);
             }
         }
 
@@ -323,8 +209,8 @@ namespace Core
 
             for (var i = 0; i < itemCharChoiceNames.Length; i++)
             {
-                itemCharChoiceNames[i].text = GameManager.Instance.GetPlayerStats()[i].CharName;
-                itemCharChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.Instance.GetPlayerStats()[i].gameObject.activeInHierarchy);
+                itemCharChoiceNames[i].text = GameManager.instance.playerStats[i].charName;
+                itemCharChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.instance.playerStats[i].gameObject.activeInHierarchy);
             }
         }
 

@@ -5,26 +5,27 @@ namespace Core
 {
     public class EssentialsLoader : MonoBehaviour
     {
-        public GameObject userInterface;
+        public GameObject UIScreen;
         public GameObject player;
-        public GameObject theGameManager;
+        public GameObject gameMan;
 
+        // Start is called before the first frame update
         private void Start()
         {
             if (UIFade.instance == null)
             {
-                UIFade.instance = Instantiate(userInterface).GetComponent<UIFade>();
+                UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>();
             }
 
-            if (PlayerController.Instance == null)
+            if (PlayerController.instance == null)
             {
                 var clone = Instantiate(player).GetComponent<PlayerController>();
-                PlayerController.Instance = clone;
+                PlayerController.instance = clone;
             }
 
-            if (GameManager.Instance == null)
+            if (GameManager.instance == null)
             {
-                Instantiate(theGameManager);
+                Instantiate(gameMan);
             }
         }
     }

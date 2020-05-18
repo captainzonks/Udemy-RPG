@@ -6,33 +6,37 @@ namespace Core
 {
     public class DialogManager : MonoBehaviour
     {
-        [SerializeField] private Text dialogText;
-        [SerializeField] private Text nameText;
-        [SerializeField] private GameObject dialogBox;
-        [SerializeField] private GameObject nameBox;
 
-        [SerializeField] private string[] dialogLines;
+        public Text dialogText;
+        public Text nameText;
+        public GameObject dialogBox;
+        public GameObject nameBox;
 
-        [SerializeField] private int currentLine;
+        public string[] dialogLines;
 
-        public static DialogManager Instance { get; private set; }
+        public int currentLine;
 
-        private bool _justStarted;
+        public static DialogManager instance;
+        private bool justStarted;
 
-        private string _questToMark;
-        private bool _markQuestComplete;
-        private bool _shouldMarkQuest;
+        private string questToMark;
+        private bool markQuestComplete;
+        private bool shouldMarkQuest;
 
+        // Start is called before the first frame update
         private void Start()
         {
-            Instance = this;
+            instance = this;
+
+            // dialogText.text = dialogLines[currentLine];
         }
 
+        // Update is called once per frame
         private void Update()
         {
             if (!dialogBox.activeInHierarchy) return;
             if (!Input.GetButtonUp("Fire1")) return;
-            if (!_justStarted)
+            if (!justStarted)
             {
                 currentLine++;
 
@@ -40,17 +44,17 @@ namespace Core
                 {
                     dialogBox.SetActive(false);
 
-                    GameManager.Instance.ModifyDialogActive(false);
+                    GameManager.instance.dialogActive = false;
 
-                    if (!_shouldMarkQuest) return;
-                    _shouldMarkQuest = false;
-                    if (_markQuestComplete)
+                    if (!shouldMarkQuest) return;
+                    shouldMarkQuest = false;
+                    if (markQuestComplete)
                     {
-                        QuestManager.Instance.MarkQuestComplete(_questToMark);
+                        QuestManager.instance.MarkQuestComplete(questToMark);
                     }
                     else
                     {
-                        QuestManager.Instance.MarkQuestIncomplete(_questToMark);
+                        QuestManager.instance.MarkQuestIncomplete(questToMark);
 
                     }
                 }
@@ -62,38 +66,8 @@ namespace Core
             }
             else
             {
-                _justStarted = false;
+                justStarted = false;
             }
-        }
-
-        public Text GetDialogText()
-        {
-            return dialogText;
-        }
-
-        public Text GetNameText()
-        {
-            return nameText;
-        }
-
-        public GameObject GetDialogBox()
-        {
-            return dialogBox;
-        }
-
-        public GameObject GetNameBox()
-        {
-            return nameBox;
-        }
-
-        public string[] GetDialogLines()
-        {
-            return dialogLines;
-        }
-
-        public int GetCurrentLine()
-        {
-            return currentLine;
         }
 
         public void ShowDialog(string[] newLines, bool isPerson)
@@ -106,11 +80,11 @@ namespace Core
 
             dialogText.text = dialogLines[currentLine];
             dialogBox.SetActive(true);
-            _justStarted = true;
+            justStarted = true;
 
             nameBox.SetActive(isPerson);
 
-            GameManager.Instance.ModifyDialogActive(true);
+            GameManager.instance.dialogActive = true;
         }
 
         private void CheckIfName()
@@ -122,10 +96,10 @@ namespace Core
 
         public void ShouldActivateQuestAtEnd(string questName, bool markComplete)
         {
-            _questToMark = questName;
-            _markQuestComplete = markComplete;
+            questToMark = questName;
+            markQuestComplete = markComplete;
 
-            _shouldMarkQuest = true;
+            shouldMarkQuest = true;
         }
     }
 }

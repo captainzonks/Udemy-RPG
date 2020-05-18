@@ -4,159 +4,155 @@ using UnityEngine.UI;
 namespace Core
 {
     public class Shop : MonoBehaviour
+{
+    public static Shop instance;
+
+    public GameObject shopMenu;
+    public GameObject buyMenu;
+    public GameObject sellMenu;
+
+    public Text goldText;
+
+    public string[] itemsForSale;
+
+    public ItemButton[] buyItemButtons;
+    public ItemButton[] sellItemButtons;
+
+    public Item selectedItem;
+    public Text buyItemName, buyItemDescription, buyItemValue;
+    public Text sellItemName, sellItemDescription, sellItemValue;
+
+    // Start is called before the first frame update
+    private void Start()
     {
-        public static Shop Instance { get; private set; }
+        instance = this;
+    }
 
-        public GameObject ShopMenu { get; set; }
-        public GameObject BuyMenu { get; set; }
-        public GameObject SellMenu { get; set; }
-
-        private Text GoldText { get; set; }
-
-        public string[] ItemsForSale { get; set; }
-
-        private ItemButton[] BuyItemButtons { get; set; }
-        private ItemButton[] SellItemButtons { get; set; }
-
-        private Item SelectedItem { get; set; }
-        private Text BuyItemName { get; set; }
-        private Text BuyItemDescription { get; set; }
-        private Text BuyItemValue { get; set; }
-        private Text SellItemName { get; set; }
-        private Text SellItemDescription { get; set; }
-        private Text SellItemValue { get; set; }
-
-        private void Start()
+    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K) && !shopMenu.activeInHierarchy)
         {
-            Instance = this;
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.K) && !ShopMenu.activeInHierarchy)
-            {
-                OpenShop();
-            }
-        }
-
-        public void OpenShop()
-        {
-            ShopMenu.SetActive(true);
-            OpenBuyMenu();
-
-            GameManager.Instance.SetShopActive(true);
-
-            GoldText.text = GameManager.Instance.CurrentGold() + "g";
-        }
-
-        public void CloseShop()
-        {
-            ShopMenu.SetActive(false);
-
-            GameManager.Instance.SetShopActive(false);
-        }
-
-        public void OpenBuyMenu()
-        {
-            BuyItemButtons[0].Press();
-
-            BuyMenu.SetActive(true);
-            SellMenu.SetActive(false);
-
-            for (var i = 0; i < BuyItemButtons.Length; i++)
-            {
-                BuyItemButtons[i].ButtonValue = i;
-
-                if (ItemsForSale[i] != "")
-                {
-                    BuyItemButtons[i].ButtonImage.gameObject.SetActive(true);
-                    BuyItemButtons[i].ButtonImage.sprite =
-                        GameManager.Instance.GetItemDetails(ItemsForSale[i]).ItemSprite;
-                    BuyItemButtons[i].AmountText.text = "";
-                }
-                else
-                {
-                    BuyItemButtons[i].ButtonImage.gameObject.SetActive(false);
-                    BuyItemButtons[i].AmountText.text = "";
-                }
-            }
-        }
-
-        public void OpenSellMenu()
-        {
-            SellItemButtons[0].Press();
-
-            SellMenu.SetActive(true);
-            BuyMenu.SetActive(false);
-
-            ShowSellItems();
-        }
-
-        private void ShowSellItems()
-        {
-            GameManager.Instance.SortItems();
-            for (var i = 0; i < SellItemButtons.Length; i++)
-            {
-                SellItemButtons[i].ButtonValue = i;
-
-                if (GameManager.Instance.ItemsHeld()[i] != "")
-                {
-                    SellItemButtons[i].ButtonImage.gameObject.SetActive(true);
-                    SellItemButtons[i].ButtonImage.sprite = GameManager.Instance
-                        .GetItemDetails(GameManager.Instance.ItemsHeld()[i]).ItemSprite;
-                    SellItemButtons[i].AmountText.text = GameManager.Instance.NumberOfItems()[i].ToString();
-                }
-                else
-                {
-                    SellItemButtons[i].ButtonImage.gameObject.SetActive(false);
-                    SellItemButtons[i].AmountText.text = "";
-                }
-            }
-        }
-
-        public void SelectBuyItem(Item buyItem)
-        {
-            SelectedItem = buyItem;
-            BuyItemName.text = SelectedItem.ItemName;
-            BuyItemDescription.text = SelectedItem.Description;
-            BuyItemValue.text = "Value: " + SelectedItem.Value + "g";
-        }
-
-        public void SelectSellItem(Item sellItem)
-        {
-            SelectedItem = sellItem;
-            SellItemName.text = SelectedItem.ItemName;
-            SellItemDescription.text = SelectedItem.Description;
-            SellItemValue.text = "Value: " + Mathf.FloorToInt(SelectedItem.Value * .5f) + "g";
-        }
-
-        public void BuyItem()
-        {
-            if (SelectedItem != null)
-            {
-                if (GameManager.Instance.CurrentGold() >= SelectedItem.Value)
-                {
-                    GameManager.Instance.SubtractGold(SelectedItem.Value);
-
-                    GameManager.Instance.AddItem(SelectedItem.ItemName);
-                }
-            }
-
-            GoldText.text = GameManager.Instance.CurrentGold() + "g";
-        }
-
-        public void SellItem()
-        {
-            if (SelectedItem != null)
-            {
-                GameManager.Instance.AddGold(Mathf.FloorToInt(SelectedItem.Value * .5f));
-
-                GameManager.Instance.RemoveItem(SelectedItem.ItemName);
-            }
-
-            GoldText.text = GameManager.Instance.CurrentGold() + "g";
-
-            ShowSellItems();
+            OpenShop();
         }
     }
+
+    public void OpenShop()
+    {
+        shopMenu.SetActive(true);
+        OpenBuyMenu();
+
+        GameManager.instance.shopActive = true;
+
+        goldText.text = GameManager.instance.currentGold.ToString() + "g";
+    }
+
+    public void CloseShop()
+    {
+        shopMenu.SetActive(false);
+
+        GameManager.instance.shopActive = false;
+    }
+
+    public void OpenBuyMenu()
+    {
+        buyItemButtons[0].Press();
+
+        buyMenu.SetActive(true);
+        sellMenu.SetActive(false);
+
+        for(var i = 0; i < buyItemButtons.Length; i++)
+        {
+            buyItemButtons[i].buttonValue = i;
+
+            if(itemsForSale[i] != "")
+            {
+                buyItemButtons[i].buttonImage.gameObject.SetActive(true);
+                buyItemButtons[i].buttonImage.sprite = GameManager.instance.GetItemDetails(itemsForSale[i]).itemSprite;
+                buyItemButtons[i].amountText.text = "";
+            }
+            else
+            {
+                buyItemButtons[i].buttonImage.gameObject.SetActive(false);
+                buyItemButtons[i].amountText.text = "";
+            }
+        }
+    }
+
+    public void OpenSellMenu()
+    {
+        sellItemButtons[0].Press();
+
+        sellMenu.SetActive(true);
+        buyMenu.SetActive(false);
+
+        ShowSellItems();
+    }
+
+    private void ShowSellItems()
+    {
+        GameManager.instance.SortItems();
+        for(var i = 0; i < sellItemButtons.Length; i++)
+        {
+            sellItemButtons[i].buttonValue = i;
+
+            if(GameManager.instance.itemsHeld[i] != "")
+            {
+                sellItemButtons[i].buttonImage.gameObject.SetActive(true);
+                sellItemButtons[i].buttonImage.sprite = GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[i]).itemSprite;
+                sellItemButtons[i].amountText.text = GameManager.instance.numberOfItems[i].ToString();
+            }
+            else
+            {
+                sellItemButtons[i].buttonImage.gameObject.SetActive(false);
+                sellItemButtons[i].amountText.text = "";
+            }
+        }
+    }
+
+    public void SelectBuyItem(Item buyItem)
+    {
+        selectedItem = buyItem;
+        buyItemName.text = selectedItem.itemName;
+        buyItemDescription.text = selectedItem.description;
+        buyItemValue.text = "Value: " + selectedItem.value + "g";
+    }
+
+    public void SelectSellItem(Item sellItem)
+    {
+        selectedItem = sellItem;
+        sellItemName.text = selectedItem.itemName;
+        sellItemDescription.text = selectedItem.description;
+        sellItemValue.text = "Value: " + Mathf.FloorToInt(selectedItem.value * .5f).ToString() + "g";
+    }
+
+    public void BuyItem()
+    {
+        if (selectedItem != null)
+        {
+            if (GameManager.instance.currentGold >= selectedItem.value)
+            {
+                GameManager.instance.currentGold -= selectedItem.value;
+
+                GameManager.instance.AddItem(selectedItem.itemName);
+            }
+        }
+
+        goldText.text = GameManager.instance.currentGold.ToString() + "g";
+    }
+
+    public void SellItem()
+    {
+        if (selectedItem != null)
+        {
+            GameManager.instance.currentGold += Mathf.FloorToInt(selectedItem.value * .5f);
+
+            GameManager.instance.RemoveItem(selectedItem.itemName);
+        }
+
+        goldText.text = GameManager.instance.currentGold.ToString() + "g";
+
+        ShowSellItems();
+    }
+}
 }

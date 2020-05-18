@@ -5,14 +5,14 @@ namespace Movement
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] private Transform target;
+        public Transform target;
 
-        [SerializeField] private Tilemap theMap;
-        private Vector3 _bottomLeftLimit;
-        private Vector3 _topRightLimit;
+        public Tilemap theMap;
+        private Vector3 bottomLeftLimit;
+        private Vector3 topRightLimit;
 
-        private float _halfHeight;
-        private float _halfWidth;
+        private float halfHeight;
+        private float halfWidth;
 
         // Start is called before the first frame update
         private void Start()
@@ -23,15 +23,15 @@ namespace Movement
             if (Camera.main != null)
             {
                 var main = Camera.main;
-                _halfHeight = main.orthographicSize;
-                _halfWidth = _halfHeight * main.aspect;
+                halfHeight = main.orthographicSize;
+                halfWidth = halfHeight * main.aspect;
             }
 
             var localBounds = theMap.localBounds;
-            _bottomLeftLimit = localBounds.min + new Vector3(_halfWidth, _halfHeight, 0f);
-            _topRightLimit = localBounds.max + new Vector3(-_halfWidth, -_halfHeight, 0f);
+            bottomLeftLimit = localBounds.min + new Vector3(halfWidth, halfHeight, 0f);
+            topRightLimit = localBounds.max + new Vector3(-halfWidth, -halfHeight, 0f);
 
-            PlayerController.Instance.SetBounds(localBounds.min, localBounds.max);
+            PlayerController.instance.SetBounds(localBounds.min, localBounds.max);
         }
 
         // LateUpdate is called once per frame after Update
@@ -42,8 +42,8 @@ namespace Movement
             transformPosition = new Vector3(targetPosition.x, targetPosition.y, transformPosition.z);
 
             // keep the camera inside the bounds
-            transformPosition = new Vector3(Mathf.Clamp(transformPosition.x, _bottomLeftLimit.x, _topRightLimit.x),
-                Mathf.Clamp(transformPosition.y, _bottomLeftLimit.y, _topRightLimit.y),
+            transformPosition = new Vector3(Mathf.Clamp(transformPosition.x, bottomLeftLimit.x, topRightLimit.x),
+                Mathf.Clamp(transformPosition.y, bottomLeftLimit.y, topRightLimit.y),
                 transformPosition.z);
             transform.position = transformPosition;
         }

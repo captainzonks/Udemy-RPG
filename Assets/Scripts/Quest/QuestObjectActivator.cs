@@ -1,28 +1,30 @@
-﻿using UnityEngine;
+﻿using Core;
+using Movement;
+using UnityEngine;
 
 namespace Quest
 {
     public class QuestObjectActivator : MonoBehaviour
     {
-        [SerializeField] private GameObject objectToActivate;
+        public GameObject objectToActivate;
 
-        [SerializeField] private string questToCheck;
+        public string questToCheck;
 
-        [SerializeField] private bool activeIfComplete;
+        public bool activeIfComplete;
 
-        private bool _initialCheckDone;
+        private bool initialCheckDone;
 
         private void Update()
         {
-            if (_initialCheckDone) return;
-            _initialCheckDone = true;
+            if (initialCheckDone) return;
+            initialCheckDone = true;
 
             CheckCompletion();
         }
 
         public void CheckCompletion()
         {
-            if (QuestManager.Instance.CheckIfComplete(questToCheck))
+            if (QuestManager.instance.CheckIfComplete(questToCheck))
             {
                 objectToActivate.SetActive(activeIfComplete);
 

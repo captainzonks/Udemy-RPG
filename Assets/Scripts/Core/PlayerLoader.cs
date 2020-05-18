@@ -6,12 +6,12 @@ namespace Core
     public class PlayerLoader : MonoBehaviour
     {
 
-        [SerializeField] private GameObject player;
+        public GameObject player;
 
         // Start is called before the first frame update
         private void Start()
         {
-            if (PlayerController.Instance == null)
+            if (PlayerController.instance == null)
             {
                 Instantiate(player);
             }

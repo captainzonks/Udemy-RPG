@@ -5,21 +5,22 @@ namespace Core
 {
     public class UIFade : MonoBehaviour
     {
-
         public static UIFade instance;
 
-        [SerializeField] private Image fadeScreen;
-        [SerializeField] private float fadeSpeed;
+        public Image fadeScreen;
+        public float fadeSpeed;
 
-        [SerializeField] private bool shouldFadeToBlack;
-        [SerializeField] private bool shouldFadeFromBlack;
+        public bool shouldFadeToBlack;
+        public bool shouldFadeFromBlack;
 
+        // Start is called before the first frame update
         private void Start()
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
+        // Update is called once per frame
         private void Update()
         {
             if (shouldFadeToBlack)
