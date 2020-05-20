@@ -4,19 +4,23 @@ namespace Core
 {
     public class Item : MonoBehaviour
     {
-        [Header("Item Type")] public bool isItem;
+        [Header("Item Type")] 
+        public bool isItem;
         public bool isWeapon;
         public bool isArmor;
 
-        [Header("Item Details")] public string itemName;
+        [Header("Item Details")] 
+        public string itemName;
         public string description;
         public int value;
         public Sprite itemSprite;
 
-        [Header("Item Details")] public int amountToChange;
+        [Header("Item Details")] 
+        public int amountToChange;
         public bool affectHP, affectMP, affectStr;
 
-        [Header("Weapon/Armor Details")] public int weaponStrength;
+        [Header("Weapon/Armor Details")] 
+        public int weaponStrength;
 
         public int armorStrength;
 

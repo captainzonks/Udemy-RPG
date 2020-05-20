@@ -12,7 +12,7 @@ namespace Core
         // Update is called once per frame
         private void Update()
         {
-            if (!canOpen || !Input.GetButtonDown("Fire1") || !PlayerController.instance.canMove ||
+            if (!canOpen || !Input.GetButtonDown("Fire1") || !PlayerController.Instance.canMove ||
                 Shop.instance.shopMenu.activeInHierarchy) return;
             Shop.instance.itemsForSale = itemsForSale;
 

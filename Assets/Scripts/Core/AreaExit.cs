@@ -40,7 +40,7 @@ namespace Core
 
             UIFade.instance.FadeToBlack();
 
-            PlayerController.instance.areaTransitionName = areaTransitionName;
+            PlayerController.Instance.areaTransitionName = areaTransitionName;
         }
     }
 }

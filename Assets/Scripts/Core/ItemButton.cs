@@ -20,19 +20,17 @@ namespace Core
                 }
             }
 
-            if (Shop.instance.shopMenu.activeInHierarchy)
+            if (!Shop.instance.shopMenu.activeInHierarchy) return;
+            if (Shop.instance.buyMenu.activeInHierarchy)
             {
-                if (Shop.instance.buyMenu.activeInHierarchy)
-                {
-                    Shop.instance.SelectBuyItem(
-                        GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]));
-                }
+                Shop.instance.SelectBuyItem(
+                    GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]));
+            }
 
-                if (Shop.instance.sellMenu.activeInHierarchy)
-                {
-                    Shop.instance.SelectSellItem(
-                        GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]));
-                }
+            if (Shop.instance.sellMenu.activeInHierarchy)
+            {
+                Shop.instance.SelectSellItem(
+                    GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]));
             }
         }
     }

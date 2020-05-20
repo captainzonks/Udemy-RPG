@@ -17,10 +17,10 @@ namespace Core
                 UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>();
             }
 
-            if (PlayerController.instance == null)
+            if (PlayerController.Instance == null)
             {
                 var clone = Instantiate(player).GetComponent<PlayerController>();
-                PlayerController.instance = clone;
+                PlayerController.Instance = clone;
             }
 
             if (GameManager.instance == null)

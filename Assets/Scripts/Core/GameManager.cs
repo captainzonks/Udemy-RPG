@@ -35,11 +35,11 @@ namespace Core
         {
             if(gameMenuOpen || dialogActive || fadingBetweenAreas || shopActive)
             {
-                PlayerController.instance.canMove = false;
+                PlayerController.Instance.canMove = false;
             }
             else
             {
-                PlayerController.instance.canMove = true;
+                PlayerController.Instance.canMove = true;
             }
 
             // debug test

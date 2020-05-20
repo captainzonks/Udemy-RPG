@@ -10,9 +10,9 @@ namespace Core
         // Start is called before the first frame update
         private void Start()
         {
-            if (transitionName == PlayerController.instance.areaTransitionName)
+            if (transitionName == PlayerController.Instance.areaTransitionName)
             {
-                PlayerController.instance.transform.position = transform.position;
+                PlayerController.Instance.transform.position = transform.position;
             }
 
             UIFade.instance.FadeFromBlack();

@@ -4,28 +4,38 @@ namespace Movement
 {
     public class PlayerController : MonoBehaviour
     {
-        public Rigidbody2D theRB;
-        public float moveSpeed;
+        public float moveSpeed = 4f;
 
-        public Animator myAnim;
+        // player movement
+        private Rigidbody2D _playerRigidBody;
+        private Vector3 _change;
+        private Animator _playerAnimator;
 
-        public static PlayerController instance;
+        public static PlayerController Instance;
 
         public string areaTransitionName;
-        private Vector3 bottomLeftLimit;
-        private Vector3 topRightLimit;
+        private Vector3 _bottomLeftLimit;
+        private Vector3 _topRightLimit;
 
         public bool canMove = true;
 
+        // cache
+        private static readonly int MoveX = Animator.StringToHash("moveX");
+        private static readonly int MoveY = Animator.StringToHash("moveY");
+        private static readonly int Moving = Animator.StringToHash("moving");
+
         private void Start()
         {
-            if (instance == null)
+            _playerRigidBody = GetComponent<Rigidbody2D>();
+            _playerAnimator = GetComponent<Animator>();
+
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
             else
             {
-                if (instance != this)
+                if (Instance != this)
                 {
                     Destroy(gameObject);
                 }
@@ -36,37 +46,58 @@ namespace Movement
 
         private void Update()
         {
-            if (canMove)
+            _change = Vector3.zero;
+            _change.x = Input.GetAxisRaw("Horizontal");
+            _change.y = Input.GetAxisRaw("Vertical");
+            UpdateAnimationAndMove();
+
+            //_playerAnimator.SetFloat("moveX", _playerRigidBody.velocity.x);
+            //_playerAnimator.SetFloat("moveY", _playerRigidBody.velocity.y);
+
+            //if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 ||
+            //    Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+            //{
+            //    if (canMove)
+            //    {
+            //        _playerAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
+            //        _playerAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
+            //    }
+            //}
+
+            // keep player inside the bounds
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, _bottomLeftLimit.x, _topRightLimit.x),
+                Mathf.Clamp(transform.position.y, _bottomLeftLimit.y, _topRightLimit.y), transform.position.z);
+        }
+
+        private void UpdateAnimationAndMove()
+        {
+            if (_change != Vector3.zero)
             {
-                theRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed;
+                //_playerRigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed;
+                
+                MoveCharacter();
+                _playerAnimator.SetFloat(MoveX, _change.x);
+                _playerAnimator.SetFloat(MoveY, _change.y);
+                _playerAnimator.SetBool(Moving, true);
             }
             else
             {
-                theRB.velocity = Vector2.zero;
+                _playerAnimator.SetBool(Moving, false);
+                //_playerRigidBody.velocity = Vector2.zero;
             }
+        }
 
-            myAnim.SetFloat("moveX", theRB.velocity.x);
-            myAnim.SetFloat("moveY", theRB.velocity.y);
-
-            if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 ||
-                Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
-            {
-                if (canMove)
-                {
-                    myAnim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-                    myAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
-                }
-            }
-
-            // keep player inside the bounds
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x),
-                Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y), transform.position.z);
+        private void MoveCharacter()
+        {
+            _playerRigidBody.MovePosition(
+                transform.position + _change * (moveSpeed * Time.deltaTime)
+                );
         }
 
         public void SetBounds(Vector3 botLeft, Vector3 topRight)
         {
-            bottomLeftLimit = botLeft + new Vector3(0.5f, 1f, 0f);
-            topRightLimit = topRight + new Vector3(-0.5f, -1f, 0f);
+            _bottomLeftLimit = botLeft + new Vector3(0.5f, 1f, 0f);
+            _topRightLimit = topRight + new Vector3(-0.5f, -1f, 0f);
         }
     }
 }

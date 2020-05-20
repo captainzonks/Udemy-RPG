@@ -11,7 +11,7 @@ namespace Core
         // Start is called before the first frame update
         private void Start()
         {
-            if (PlayerController.instance == null)
+            if (PlayerController.Instance == null)
             {
                 Instantiate(player);
             }
