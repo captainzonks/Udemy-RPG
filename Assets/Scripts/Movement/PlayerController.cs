@@ -4,7 +4,7 @@ namespace Movement
 {
     public class PlayerController : MonoBehaviour
     {
-        public float moveSpeed = 4f;
+        public float moveSpeed = 6f;
 
         // player movement
         private Rigidbody2D _playerRigidBody;
@@ -65,13 +65,15 @@ namespace Movement
             //}
 
             // keep player inside the bounds
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, _bottomLeftLimit.x, _topRightLimit.x),
-                Mathf.Clamp(transform.position.y, _bottomLeftLimit.y, _topRightLimit.y), transform.position.z);
+            var position = transform.position;
+            position = new Vector3(Mathf.Clamp(position.x, _bottomLeftLimit.x, _topRightLimit.x),
+                Mathf.Clamp(position.y, _bottomLeftLimit.y, _topRightLimit.y), position.z);
+            transform.position = position;
         }
 
         private void UpdateAnimationAndMove()
         {
-            if (_change != Vector3.zero)
+            if (_change != Vector3.zero && canMove)
             {
                 //_playerRigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed;
                 

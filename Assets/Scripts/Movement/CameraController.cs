@@ -5,12 +5,14 @@ namespace Movement
 {
     public class CameraController : MonoBehaviour
     {
+        // set references in editor
         public Transform target;
         public float smoothing;
-
         public Tilemap theMap;
-        private Vector3 _bottomLeftLimit;
-        private Vector3 _topRightLimit;
+
+        // map limits
+        [HideInInspector] public Vector3 bottomLeftLimit;
+        [HideInInspector] public Vector3 topRightLimit;
 
         private float _halfHeight;
         private float _halfWidth;
@@ -19,6 +21,11 @@ namespace Movement
         {
             target = FindObjectOfType<PlayerController>().transform;
 
+            UpdateBounds();
+        }
+
+        public void UpdateBounds()
+        {
             if (Camera.main != null)
             {
                 var main = Camera.main;
@@ -27,8 +34,8 @@ namespace Movement
             }
 
             var localBounds = theMap.localBounds;
-            _bottomLeftLimit = localBounds.min + new Vector3(_halfWidth, _halfHeight, 0f);
-            _topRightLimit = localBounds.max + new Vector3(-_halfWidth, -_halfHeight, 0f);
+            bottomLeftLimit = localBounds.min + new Vector3(_halfWidth, _halfHeight, 0f);
+            topRightLimit = localBounds.max + new Vector3(-_halfWidth, -_halfHeight, 0f);
 
             PlayerController.Instance.SetBounds(localBounds.min, localBounds.max);
         }
@@ -37,16 +44,16 @@ namespace Movement
         {
             if (transform.position == target.position) return;
 
-            var transformPosition = transform.position;
-            var targetPosition = target.position;
-            var newTargetPosition = new Vector3(targetPosition.x, targetPosition.y, transformPosition.z);
-            transformPosition = Vector3.Lerp(transformPosition, newTargetPosition, smoothing);
+            var cameraPosition = transform.position;
+            var playerPosition = target.position;
+            var newTargetPosition = new Vector3(playerPosition.x, playerPosition.y, cameraPosition.z);
+            cameraPosition = Vector3.Lerp(cameraPosition, newTargetPosition, smoothing);
 
             //// keep the camera inside the bounds
-            transformPosition = new Vector3(Mathf.Clamp(transformPosition.x, _bottomLeftLimit.x, _topRightLimit.x),
-                Mathf.Clamp(transformPosition.y, _bottomLeftLimit.y, _topRightLimit.y),
-                transformPosition.z);
-            transform.position = transformPosition;
+            cameraPosition = new Vector3(Mathf.Clamp(cameraPosition.x, bottomLeftLimit.x, topRightLimit.x),
+                Mathf.Clamp(cameraPosition.y, bottomLeftLimit.y, topRightLimit.y),
+                cameraPosition.z);
+            transform.position = cameraPosition;
         }
     }
 }
