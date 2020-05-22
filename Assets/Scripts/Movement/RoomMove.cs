@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 namespace Movement
@@ -9,6 +11,12 @@ namespace Movement
         public Vector3 playerChange;
 
         private CameraController _cam;
+
+        // title card variables
+        public bool needText;
+        public string placeName;
+        public GameObject text;
+        public Text placeText;
 
         private void Start()
         {
@@ -22,6 +30,19 @@ namespace Movement
             other.transform.position += playerChange;
             _cam.theMap = theGround;
             _cam.UpdateBounds();
+
+            if (needText)
+            {
+                StartCoroutine(PlaceNameCo());
+            }
+        }
+
+        private IEnumerator PlaceNameCo()
+        {
+            text.SetActive(true);
+            placeText.text = placeName;
+            yield return new WaitForSeconds(4f);
+            text.SetActive(false);
         }
     }
 }
