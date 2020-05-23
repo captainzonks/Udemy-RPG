@@ -12,9 +12,9 @@ namespace Core
         // Start is called before the first frame update
         private void Start()
         {
-            if (UIFade.instance == null)
+            if (UIFade.Instance == null)
             {
-                UIFade.instance = Instantiate(UIScreen).GetComponent<UIFade>();
+                UIFade.Instance = Instantiate(UIScreen).GetComponent<UIFade>();
             }
 
             if (PlayerController.Instance == null)

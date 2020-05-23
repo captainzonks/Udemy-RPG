@@ -38,7 +38,7 @@ namespace Core
 
             GameManager.instance.fadingBetweenAreas = true;
 
-            UIFade.instance.FadeToBlack();
+            UIFade.Instance.FadeToBlack();
 
             PlayerController.Instance.areaTransitionName = areaTransitionName;
         }

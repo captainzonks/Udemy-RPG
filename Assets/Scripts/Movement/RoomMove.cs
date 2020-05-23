@@ -39,9 +39,12 @@ namespace Movement
 
         private IEnumerator PlaceNameCo()
         {
-            text.SetActive(true);
             placeText.text = placeName;
+
+            text.SetActive(true);
+
             yield return new WaitForSeconds(4f);
+
             text.SetActive(false);
         }
     }

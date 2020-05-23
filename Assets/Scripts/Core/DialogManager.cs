@@ -16,17 +16,17 @@ namespace Core
 
         public int currentLine;
 
-        public static DialogManager instance;
-        private bool justStarted;
+        public static DialogManager Instance;
+        private bool _justStarted;
 
-        private string questToMark;
-        private bool markQuestComplete;
-        private bool shouldMarkQuest;
+        private string _questToMark;
+        private bool _markQuestComplete;
+        private bool _shouldMarkQuest;
 
         // Start is called before the first frame update
         private void Start()
         {
-            instance = this;
+            Instance = this;
 
             // dialogText.text = dialogLines[currentLine];
         }
@@ -36,7 +36,7 @@ namespace Core
         {
             if (!dialogBox.activeInHierarchy) return;
             if (!Input.GetButtonUp("Fire1")) return;
-            if (!justStarted)
+            if (!_justStarted)
             {
                 currentLine++;
 
@@ -46,15 +46,15 @@ namespace Core
 
                     GameManager.instance.dialogActive = false;
 
-                    if (!shouldMarkQuest) return;
-                    shouldMarkQuest = false;
-                    if (markQuestComplete)
+                    if (!_shouldMarkQuest) return;
+                    _shouldMarkQuest = false;
+                    if (_markQuestComplete)
                     {
-                        QuestManager.instance.MarkQuestComplete(questToMark);
+                        QuestManager.instance.MarkQuestComplete(_questToMark);
                     }
                     else
                     {
-                        QuestManager.instance.MarkQuestIncomplete(questToMark);
+                        QuestManager.instance.MarkQuestIncomplete(_questToMark);
 
                     }
                 }
@@ -66,7 +66,7 @@ namespace Core
             }
             else
             {
-                justStarted = false;
+                _justStarted = false;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Core
 
             dialogText.text = dialogLines[currentLine];
             dialogBox.SetActive(true);
-            justStarted = true;
+            _justStarted = true;
 
             nameBox.SetActive(isPerson);
 
@@ -96,10 +96,10 @@ namespace Core
 
         public void ShouldActivateQuestAtEnd(string questName, bool markComplete)
         {
-            questToMark = questName;
-            markQuestComplete = markComplete;
+            _questToMark = questName;
+            _markQuestComplete = markComplete;
 
-            shouldMarkQuest = true;
+            _shouldMarkQuest = true;
         }
     }
 }

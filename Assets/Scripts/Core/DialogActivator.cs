@@ -7,7 +7,7 @@ namespace Core
 
         public string[] lines;
 
-        private bool canActivate;
+        private bool _canActivate;
 
         public bool isPerson = true;
 
@@ -19,18 +19,17 @@ namespace Core
         // Update is called once per frame
         private void Update()
         {
-            if (canActivate && Input.GetButtonDown("Fire1") && !DialogManager.instance.dialogBox.activeInHierarchy)
-            {
-                DialogManager.instance.ShowDialog(lines, isPerson);
-                DialogManager.instance.ShouldActivateQuestAtEnd(questToMark, markComplete);
-            }
+            if (!_canActivate || !Input.GetButtonDown("Fire1") ||
+                DialogManager.Instance.dialogBox.activeInHierarchy) return;
+            DialogManager.Instance.ShowDialog(lines, isPerson);
+            DialogManager.Instance.ShouldActivateQuestAtEnd(questToMark, markComplete);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                canActivate = true;
+                _canActivate = true;
             }
         }
 
@@ -38,7 +37,7 @@ namespace Core
         {
             if (other.CompareTag("Player"))
             {
-                canActivate = false;
+                _canActivate = false;
             }
         }
     }

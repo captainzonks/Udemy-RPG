@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core
 {
     public class UIFade : MonoBehaviour
     {
-        public static UIFade instance;
+        public static UIFade Instance;
 
         public Image fadeScreen;
         public float fadeSpeed;
@@ -16,7 +17,7 @@ namespace Core
         // Start is called before the first frame update
         private void Start()
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
 

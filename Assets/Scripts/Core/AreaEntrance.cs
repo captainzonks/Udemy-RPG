@@ -15,7 +15,7 @@ namespace Core
                 PlayerController.Instance.transform.position = transform.position;
             }
 
-            UIFade.instance.FadeFromBlack();
+            UIFade.Instance.FadeFromBlack();
             GameManager.instance.fadingBetweenAreas = false;
         }
     }
