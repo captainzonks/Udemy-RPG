@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UI
   - Location
+  - Console
   layers:
   - Default
   - TransparentFX

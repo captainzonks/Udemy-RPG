@@ -14,7 +14,7 @@ namespace Console
 
         public void AddCommandToConsole()
         {
-            var addMessage = " command has been added to the console";
+            var addMessage = " command has been added to the console\n";
 
             ConsoleController.AddCommandsToConsole(Command, this);
             ConsoleController.AddStaticMessageToConsole(Name + addMessage);

@@ -1,9 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 namespace Movement
 {
+    public enum PlayerState
+    {
+        Walk,
+        Attack,
+        Interact
+    }
+
     public class PlayerController : MonoBehaviour
     {
+        public PlayerState currentState;
         public float moveSpeed = 6f;
 
         // player movement
@@ -23,12 +33,10 @@ namespace Movement
         private static readonly int MoveX = Animator.StringToHash("moveX");
         private static readonly int MoveY = Animator.StringToHash("moveY");
         private static readonly int Moving = Animator.StringToHash("moving");
+        private static readonly int Attacking = Animator.StringToHash("attacking");
 
-        private void Start()
+        private void Awake()
         {
-            _playerRigidBody = GetComponent<Rigidbody2D>();
-            _playerAnimator = GetComponent<Animator>();
-
             if (Instance == null)
             {
                 Instance = this;
@@ -44,12 +52,27 @@ namespace Movement
             DontDestroyOnLoad(gameObject);
         }
 
+        private void Start()
+        {
+            _playerRigidBody = GetComponent<Rigidbody2D>();
+            _playerAnimator = GetComponent<Animator>();
+            currentState = PlayerState.Walk;
+        }
+
         private void Update()
         {
             _change = Vector3.zero;
             _change.x = Input.GetAxisRaw("Horizontal");
             _change.y = Input.GetAxisRaw("Vertical");
-            UpdateAnimationAndMove();
+
+            if (Input.GetButtonDown("attack") && currentState != PlayerState.Attack)
+            {
+                StartCoroutine(AttackCo());
+            }
+            else if (currentState == PlayerState.Walk)
+            {
+                UpdateAnimationAndMove();
+            }
 
             //_playerAnimator.SetFloat("moveX", _playerRigidBody.velocity.x);
             //_playerAnimator.SetFloat("moveY", _playerRigidBody.velocity.y);
@@ -69,6 +92,16 @@ namespace Movement
             position = new Vector3(Mathf.Clamp(position.x, _bottomLeftLimit.x, _topRightLimit.x),
                 Mathf.Clamp(position.y, _bottomLeftLimit.y, _topRightLimit.y), position.z);
             transform.position = position;
+        }
+
+        private IEnumerator AttackCo()
+        {
+            _playerAnimator.SetBool(Attacking, true);
+            currentState = PlayerState.Attack;
+            yield return null;
+            _playerAnimator.SetBool(Attacking, false);
+            yield return new WaitForSeconds(0.3f);
+            currentState = PlayerState.Walk;
         }
 
         private void UpdateAnimationAndMove()
