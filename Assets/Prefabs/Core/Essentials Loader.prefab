@@ -47,3 +47,4 @@ MonoBehaviour:
     type: 3}
   player: {fileID: 7936418525395767046, guid: f47652c89009e134da27ec7f7b44a713, type: 3}
   gameMan: {fileID: 1360286289148671037, guid: a80576564873fc5458e710558e37fe1a, type: 3}
+  console: {fileID: 685403642764752150, guid: 2c9dd90980d507c4e810e72360778225, type: 3}

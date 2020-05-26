@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 
 namespace Quest
 {
@@ -7,21 +8,27 @@ namespace Quest
         public string[] questMarkerNames;
         public bool[] questMarkersComplete;
 
-        public static QuestManager instance;
+        public static QuestManager Instance;
 
         private void Start()
         {
-            instance = this;
+            Instance = this;
 
             questMarkersComplete = new bool[questMarkerNames.Length];
         }
 
         private void Update()
         {
+            if (GameManager.Instance.consoleOpen) return;
+
+
+            // debug question completion via keycode
+            /*
             if (!Input.GetKeyDown(KeyCode.Q)) return;
             Debug.Log(CheckIfComplete("quest test"));
             MarkQuestComplete("quest test");
             MarkQuestIncomplete("fight the demon");
+            */
         }
 
         private int GetQuestNumber(string questToFind)

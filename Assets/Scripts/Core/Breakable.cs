@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core
 {
@@ -14,11 +12,6 @@ namespace Core
         void Start()
         {
             _anim = GetComponent<Animator>();
-        }
-
-        void Update()
-        {
-
         }
 
         public void Smash()

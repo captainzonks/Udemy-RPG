@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Core;
 using UnityEngine;
 
 namespace Movement
@@ -14,7 +15,7 @@ namespace Movement
     public class PlayerController : MonoBehaviour
     {
         public PlayerState currentState;
-        public float moveSpeed = 6f;
+        public float moveSpeed;
 
         // player movement
         private Rigidbody2D _playerRigidBody;
@@ -27,9 +28,9 @@ namespace Movement
         private Vector3 _bottomLeftLimit;
         private Vector3 _topRightLimit;
 
-        public bool canMove = true;
+        //public bool canMove = true;
 
-        // cache
+        // cached properties
         private static readonly int MoveX = Animator.StringToHash("moveX");
         private static readonly int MoveY = Animator.StringToHash("moveY");
         private static readonly int Moving = Animator.StringToHash("moving");
@@ -68,28 +69,25 @@ namespace Movement
             _change = Vector3.zero;
             _change.x = Input.GetAxisRaw("Horizontal");
             _change.y = Input.GetAxisRaw("Vertical");
+            if (GameManager.Instance.consoleOpen) return;
 
             if (Input.GetButtonDown("attack") && currentState != PlayerState.Attack)
             {
                 StartCoroutine(AttackCo());
             }
-            else if (currentState == PlayerState.Walk)
+            else switch (currentState)
             {
-                UpdateAnimationAndMove();
+                case PlayerState.Walk:
+                    UpdateAnimationAndMove();
+                    break;
+                case PlayerState.Interact:
+                    _playerAnimator.SetBool(Moving, false);
+                    break;
+                case PlayerState.Attack:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            //_playerAnimator.SetFloat("moveX", _playerRigidBody.velocity.x);
-            //_playerAnimator.SetFloat("moveY", _playerRigidBody.velocity.y);
-
-            //if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 ||
-            //    Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
-            //{
-            //    if (canMove)
-            //    {
-            //        _playerAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-            //        _playerAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
-            //    }
-            //}
 
             // keep player inside the bounds
             var position = transform.position;
@@ -110,28 +108,25 @@ namespace Movement
 
         private void UpdateAnimationAndMove()
         {
-            if (_change != Vector3.zero && canMove)
+            if (_change != Vector3.zero && currentState == PlayerState.Walk)
             {
-                //_playerRigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * moveSpeed;
-                
                 MoveCharacter();
                 _playerAnimator.SetFloat(MoveX, _change.x);
                 _playerAnimator.SetFloat(MoveY, _change.y);
-                _playerAnimator.SetBool(Moving, true);
             }
             else
             {
                 _playerAnimator.SetBool(Moving, false);
-                //_playerRigidBody.velocity = Vector2.zero;
             }
         }
 
         private void MoveCharacter()
         {
+            _playerAnimator.SetBool(Moving, true);
             _change.Normalize();
             _playerRigidBody.MovePosition(
                 transform.position + _change * (moveSpeed * Time.deltaTime)
-                );
+            );
         }
 
         public void SetBounds(Vector3 botLeft, Vector3 topRight)

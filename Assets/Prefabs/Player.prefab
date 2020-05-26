@@ -449,9 +449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  moveSpeed: 6
+  moveSpeed: 5
   areaTransitionName: 
-  canMove: 1
 --- !u!95 &7936418525395767052
 Animator:
   serializedVersion: 3

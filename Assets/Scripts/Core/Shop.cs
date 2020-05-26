@@ -5,7 +5,7 @@ namespace Core
 {
     public class Shop : MonoBehaviour
 {
-    public static Shop instance;
+    public static Shop Instance;
 
     public GameObject shopMenu;
     public GameObject buyMenu;
@@ -22,19 +22,9 @@ namespace Core
     public Text buyItemName, buyItemDescription, buyItemValue;
     public Text sellItemName, sellItemDescription, sellItemValue;
 
-    // Start is called before the first frame update
     private void Start()
     {
-        instance = this;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K) && !shopMenu.activeInHierarchy)
-        {
-            OpenShop();
-        }
+        Instance = this;
     }
 
     public void OpenShop()

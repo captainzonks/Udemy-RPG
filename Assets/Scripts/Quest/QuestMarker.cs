@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 
 namespace Quest
 {
@@ -8,14 +9,16 @@ namespace Quest
         public bool markComplete;
 
         public bool markOnEnter;
-        private bool canMark;
+        private bool _canMark;
 
         public bool deactivateOnMarking;
 
         private void Update()
         {
-            if (!canMark || !Input.GetButtonDown("Fire1")) return;
-            canMark = false;
+            if (GameManager.Instance.consoleOpen) return;
+
+            if (!_canMark || !Input.GetButtonDown("Fire1")) return;
+            _canMark = false;
             MarkQuest();
         }
 
@@ -23,11 +26,11 @@ namespace Quest
         {
             if (markComplete)
             {
-                QuestManager.instance.MarkQuestComplete(questToMark);
+                QuestManager.Instance.MarkQuestComplete(questToMark);
             }
             else
             {
-                QuestManager.instance.MarkQuestIncomplete(questToMark);
+                QuestManager.Instance.MarkQuestIncomplete(questToMark);
             }
 
             gameObject.SetActive(!deactivateOnMarking);
@@ -42,7 +45,7 @@ namespace Quest
             }
             else
             {
-                canMark = true;
+                _canMark = true;
             }
         }
 
@@ -50,7 +53,7 @@ namespace Quest
         {
             if (other.CompareTag("Player"))
             {
-                canMark = false;
+                _canMark = false;
             }
         }
     }

@@ -12,19 +12,19 @@ namespace Quest
 
         public bool activeIfComplete;
 
-        private bool initialCheckDone;
+        private bool _initialCheckDone;
 
         private void Update()
         {
-            if (initialCheckDone) return;
-            initialCheckDone = true;
+            if (_initialCheckDone) return;
+            _initialCheckDone = true;
 
             CheckCompletion();
         }
 
         public void CheckCompletion()
         {
-            if (QuestManager.instance.CheckIfComplete(questToCheck))
+            if (QuestManager.Instance.CheckIfComplete(questToCheck))
             {
                 objectToActivate.SetActive(activeIfComplete);
 

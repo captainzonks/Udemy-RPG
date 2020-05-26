@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Console
+namespace Terminal.Commands
 {
-    public class CommandQuit : ConsoleCommand
+    public class CommandQuit : TerminalCommand
     {
         public override string Name { get; protected set; }
         public override string Command { get; protected set; }

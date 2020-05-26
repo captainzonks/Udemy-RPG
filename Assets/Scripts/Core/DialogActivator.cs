@@ -15,10 +15,10 @@ namespace Core
         public string questToMark;
         public bool markComplete;
 
-
-        // Update is called once per frame
         private void Update()
         {
+            if (GameManager.Instance.consoleOpen) return;
+
             if (!_canActivate || !Input.GetButtonDown("Fire1") ||
                 DialogManager.Instance.dialogBox.activeInHierarchy) return;
             DialogManager.Instance.ShowDialog(lines, isPerson);

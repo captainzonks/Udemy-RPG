@@ -1,4 +1,5 @@
-﻿using Movement;
+﻿using Terminal;
+using Movement;
 using UnityEngine;
 
 namespace Core
@@ -8,8 +9,8 @@ namespace Core
         public GameObject UIScreen;
         public GameObject player;
         public GameObject gameMan;
+        public GameObject console;
 
-        // Start is called before the first frame update
         private void Start()
         {
             if (UIFade.Instance == null)
@@ -26,6 +27,11 @@ namespace Core
             if (GameManager.Instance == null)
             {
                 Instantiate(gameMan);
+            }
+
+            if (TerminalController.Instance == null)
+            {
+                Instantiate(console);
             }
         }
     }

@@ -20,7 +20,6 @@ namespace Core
 
         public int currentGold;
 
-        // Start is called before the first frame update
         private void Start()
         {
             Instance = this;
@@ -30,7 +29,6 @@ namespace Core
             SortItems();
         }
 
-        // Update is called once per frame
         private void Update()
         {
             if (gameMenuOpen || dialogActive || fadingBetweenAreas || shopActive || consoleOpen)
@@ -39,16 +37,9 @@ namespace Core
             }
             else
             {
-                PlayerController.Instance.currentState = PlayerState.Walk;
+                if (PlayerController.Instance.currentState != PlayerState.Attack)
+                    PlayerController.Instance.currentState = PlayerState.Walk;
             }
-
-            // debug test
-            if (!Input.GetKeyDown(KeyCode.J)) return;
-            AddItem("Iron Armor");
-            AddItem("Fooey");
-
-            RemoveItem("Health Potion");
-            RemoveItem("Falsey");
         }
 
         public Item GetItemDetails(string itemToGrab)

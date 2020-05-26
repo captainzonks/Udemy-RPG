@@ -23,17 +23,14 @@ namespace Core
         private bool _markQuestComplete;
         private bool _shouldMarkQuest;
 
-        // Start is called before the first frame update
         private void Start()
         {
             Instance = this;
-
-            // dialogText.text = dialogLines[currentLine];
         }
 
-        // Update is called once per frame
         private void Update()
         {
+            if (GameManager.Instance.consoleOpen) return;
             if (!dialogBox.activeInHierarchy) return;
             if (!Input.GetButtonUp("Fire1")) return;
             if (!_justStarted)
@@ -50,11 +47,11 @@ namespace Core
                     _shouldMarkQuest = false;
                     if (_markQuestComplete)
                     {
-                        QuestManager.instance.MarkQuestComplete(_questToMark);
+                        QuestManager.Instance.MarkQuestComplete(_questToMark);
                     }
                     else
                     {
-                        QuestManager.instance.MarkQuestIncomplete(_questToMark);
+                        QuestManager.Instance.MarkQuestIncomplete(_questToMark);
 
                     }
                 }

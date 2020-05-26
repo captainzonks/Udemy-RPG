@@ -33,20 +33,18 @@ namespace Core
         public static GameMenu Instance;
         public Text goldText;
 
-        // Start is called before the first frame update
         private void Start()
         {
             Instance = this;
         }
 
-        // Update is called once per frame
         private void Update()
         {
+            if (GameManager.Instance.consoleOpen) return;
+
             if (!Input.GetButtonDown("Fire2")) return;
             if(theMenu.activeInHierarchy)
             {
-                //theMenu.SetActive(false);
-                //GameManager.instance.gameMenuOpen = false;
                 CloseMenu();
             }
             else
