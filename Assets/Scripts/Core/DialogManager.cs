@@ -44,7 +44,7 @@ namespace Core
                 {
                     dialogBox.SetActive(false);
 
-                    GameManager.instance.dialogActive = false;
+                    GameManager.Instance.dialogActive = false;
 
                     if (!_shouldMarkQuest) return;
                     _shouldMarkQuest = false;
@@ -84,7 +84,7 @@ namespace Core
 
             nameBox.SetActive(isPerson);
 
-            GameManager.instance.dialogActive = true;
+            GameManager.Instance.dialogActive = true;
         }
 
         private void CheckIfName()

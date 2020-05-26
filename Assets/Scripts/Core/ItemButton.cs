@@ -11,12 +11,12 @@ namespace Core
 
         public void Press()
         {
-            if (GameMenu.instance.theMenu.activeInHierarchy)
+            if (GameMenu.Instance.theMenu.activeInHierarchy)
             {
-                if (GameManager.instance.itemsHeld[buttonValue] != "")
+                if (GameManager.Instance.itemsHeld[buttonValue] != "")
                 {
-                    GameMenu.instance.SelectItem(
-                        GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]));
+                    GameMenu.Instance.SelectItem(
+                        GameManager.Instance.GetItemDetails(GameManager.Instance.itemsHeld[buttonValue]));
                 }
             }
 
@@ -24,13 +24,13 @@ namespace Core
             if (Shop.instance.buyMenu.activeInHierarchy)
             {
                 Shop.instance.SelectBuyItem(
-                    GameManager.instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]));
+                    GameManager.Instance.GetItemDetails(Shop.instance.itemsForSale[buttonValue]));
             }
 
             if (Shop.instance.sellMenu.activeInHierarchy)
             {
                 Shop.instance.SelectSellItem(
-                    GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[buttonValue]));
+                    GameManager.Instance.GetItemDetails(GameManager.Instance.itemsHeld[buttonValue]));
             }
         }
     }

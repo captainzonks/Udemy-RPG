@@ -30,13 +30,13 @@ namespace Core
         public GameObject itemCharChoiceMenu;
         public Text[] itemCharChoiceNames;
 
-        public static GameMenu instance;
+        public static GameMenu Instance;
         public Text goldText;
 
         // Start is called before the first frame update
         private void Start()
         {
-            instance = this;
+            Instance = this;
         }
 
         // Update is called once per frame
@@ -53,13 +53,13 @@ namespace Core
             {
                 theMenu.SetActive(true);
                 UpdateMainStats();
-                GameManager.instance.gameMenuOpen = true;
+                GameManager.Instance.gameMenuOpen = true;
             }
         }
 
         private void UpdateMainStats()
         {
-            playerStats = GameManager.instance.playerStats;
+            playerStats = GameManager.Instance.playerStats;
 
             for(var i = 0; i < playerStats.Length; i++)
             {
@@ -82,7 +82,7 @@ namespace Core
                 }
             }
 
-            goldText.text = GameManager.instance.currentGold.ToString() + "g";
+            goldText.text = GameManager.Instance.currentGold.ToString() + "g";
         }
 
         public void ToggleWindow(int windowNumber)
@@ -112,7 +112,7 @@ namespace Core
 
             theMenu.SetActive(false);
 
-            GameManager.instance.gameMenuOpen = false;
+            GameManager.Instance.gameMenuOpen = false;
 
             itemCharChoiceMenu.SetActive(false);
         }
@@ -157,17 +157,17 @@ namespace Core
 
         public void ShowItems()
         {
-            GameManager.instance.SortItems();
+            GameManager.Instance.SortItems();
 
             for(var i = 0; i < itemButtons.Length; i++)
             {
                 itemButtons[i].buttonValue = i;
 
-                if(GameManager.instance.itemsHeld[i] != "")
+                if(GameManager.Instance.itemsHeld[i] != "")
                 {
                     itemButtons[i].buttonImage.gameObject.SetActive(true);
-                    itemButtons[i].buttonImage.sprite = GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[i]).itemSprite;
-                    itemButtons[i].amountText.text = GameManager.instance.numberOfItems[i].ToString();
+                    itemButtons[i].buttonImage.sprite = GameManager.Instance.GetItemDetails(GameManager.Instance.itemsHeld[i]).itemSprite;
+                    itemButtons[i].amountText.text = GameManager.Instance.numberOfItems[i].ToString();
                 }
                 else
                 {
@@ -199,7 +199,7 @@ namespace Core
         {
             if (activeItem != null)
             {
-                GameManager.instance.RemoveItem(activeItem.itemName);
+                GameManager.Instance.RemoveItem(activeItem.itemName);
             }
         }
 
@@ -209,8 +209,8 @@ namespace Core
 
             for (var i = 0; i < itemCharChoiceNames.Length; i++)
             {
-                itemCharChoiceNames[i].text = GameManager.instance.playerStats[i].charName;
-                itemCharChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.instance.playerStats[i].gameObject.activeInHierarchy);
+                itemCharChoiceNames[i].text = GameManager.Instance.playerStats[i].charName;
+                itemCharChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.Instance.playerStats[i].gameObject.activeInHierarchy);
             }
         }
 

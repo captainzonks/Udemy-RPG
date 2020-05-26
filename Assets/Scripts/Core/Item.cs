@@ -26,7 +26,7 @@ namespace Core
 
         public void Use(int charToUseOn)
         {
-            var selectedChar = GameManager.instance.playerStats[charToUseOn];
+            var selectedChar = GameManager.Instance.playerStats[charToUseOn];
 
             if (isItem)
             {
@@ -60,7 +60,7 @@ namespace Core
             {
                 if (selectedChar.equippedWpn != "")
                 {
-                    GameManager.instance.AddItem(selectedChar.equippedWpn);
+                    GameManager.Instance.AddItem(selectedChar.equippedWpn);
                 }
 
                 selectedChar.equippedWpn = itemName;
@@ -71,14 +71,14 @@ namespace Core
             {
                 if (selectedChar.equippedArmr != "")
                 {
-                    GameManager.instance.AddItem(selectedChar.equippedArmr);
+                    GameManager.Instance.AddItem(selectedChar.equippedArmr);
                 }
 
                 selectedChar.equippedArmr = itemName;
                 selectedChar.armrPwr = armorStrength;
             }
 
-            GameManager.instance.RemoveItem(itemName);
+            GameManager.Instance.RemoveItem(itemName);
         }
     }
 }

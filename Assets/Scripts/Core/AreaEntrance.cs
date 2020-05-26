@@ -16,7 +16,7 @@ namespace Core
             }
 
             UIFade.Instance.FadeFromBlack();
-            GameManager.instance.fadingBetweenAreas = false;
+            GameManager.Instance.fadingBetweenAreas = false;
         }
     }
 }

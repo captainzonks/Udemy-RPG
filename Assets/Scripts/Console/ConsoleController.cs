@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ namespace Console
 
         public void AddCommandToConsole()
         {
-            var addMessage = " command has been added to the console\n";
+            var addMessage = " command has been added to the console";
 
             ConsoleController.AddCommandsToConsole(Command, this);
             ConsoleController.AddStaticMessageToConsole(Name + addMessage);
@@ -35,7 +35,6 @@ namespace Console
         public Text inputText;
         public InputField consoleInput;
 
-
         private void Awake()
         {
             if (Instance != null) return;
@@ -48,6 +47,7 @@ namespace Console
         private void Start()
         {
             consoleCanvas.gameObject.SetActive(false);
+            GameManager.Instance.consoleOpen = false;
             CreateCommands();
         }
 
@@ -68,20 +68,20 @@ namespace Console
         {
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {
-                consoleCanvas.gameObject.SetActive(!consoleCanvas.gameObject.activeInHierarchy);
+                TriggerConsole();
             }
 
-            if (consoleCanvas.gameObject.activeInHierarchy)
-            {
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    if (!string.IsNullOrWhiteSpace(inputText.text))
-                    {
-                        AddMessageToConsole(inputText.text);
-                        ParseInput(inputText.text);
-                    }
-                }
-            }
+            if (!consoleCanvas.gameObject.activeInHierarchy) return;
+            if (!Input.GetKeyDown(KeyCode.Return)) return;
+            if (string.IsNullOrWhiteSpace(inputText.text)) return;
+            AddMessageToConsole(inputText.text);
+            ParseInput(inputText.text);
+        }
+
+        private void TriggerConsole()
+        {
+            consoleCanvas.gameObject.SetActive(!consoleCanvas.gameObject.activeInHierarchy);
+            GameManager.Instance.consoleOpen = !GameManager.Instance.consoleOpen;
         }
 
         private void AddMessageToConsole(string msg)
@@ -98,21 +98,21 @@ namespace Console
 
         private void ParseInput(string input)
         {
-            string[] _input = input.Split(null);
+            var splitInput = input.Split(null);
 
-            if (_input.Length == 0 || _input == null)
+            if (splitInput.Length == 0)
             {
                 AddMessageToConsole("Command not recognized");
                 return;
             }
 
-            if (!Commands.ContainsKey(_input[0]))
+            if (!Commands.ContainsKey(splitInput[0]))
             {
                 AddMessageToConsole("Command not recognized");
             }
             else
             {
-                Commands[_input[0]].RunCommand();
+                Commands[splitInput[0]].RunCommand();
             }
         }
     }

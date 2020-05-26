@@ -57,6 +57,10 @@ namespace Movement
             _playerRigidBody = GetComponent<Rigidbody2D>();
             _playerAnimator = GetComponent<Animator>();
             currentState = PlayerState.Walk;
+
+            // start the player facing downwards
+            _playerAnimator.SetFloat(MoveX, 0);
+            _playerAnimator.SetFloat(MoveY, -1);
         }
 
         private void Update()
@@ -124,6 +128,7 @@ namespace Movement
 
         private void MoveCharacter()
         {
+            _change.Normalize();
             _playerRigidBody.MovePosition(
                 transform.position + _change * (moveSpeed * Time.deltaTime)
                 );

@@ -42,16 +42,16 @@ namespace Core
         shopMenu.SetActive(true);
         OpenBuyMenu();
 
-        GameManager.instance.shopActive = true;
+        GameManager.Instance.shopActive = true;
 
-        goldText.text = GameManager.instance.currentGold.ToString() + "g";
+        goldText.text = GameManager.Instance.currentGold.ToString() + "g";
     }
 
     public void CloseShop()
     {
         shopMenu.SetActive(false);
 
-        GameManager.instance.shopActive = false;
+        GameManager.Instance.shopActive = false;
     }
 
     public void OpenBuyMenu()
@@ -68,7 +68,7 @@ namespace Core
             if(itemsForSale[i] != "")
             {
                 buyItemButtons[i].buttonImage.gameObject.SetActive(true);
-                buyItemButtons[i].buttonImage.sprite = GameManager.instance.GetItemDetails(itemsForSale[i]).itemSprite;
+                buyItemButtons[i].buttonImage.sprite = GameManager.Instance.GetItemDetails(itemsForSale[i]).itemSprite;
                 buyItemButtons[i].amountText.text = "";
             }
             else
@@ -91,16 +91,16 @@ namespace Core
 
     private void ShowSellItems()
     {
-        GameManager.instance.SortItems();
+        GameManager.Instance.SortItems();
         for(var i = 0; i < sellItemButtons.Length; i++)
         {
             sellItemButtons[i].buttonValue = i;
 
-            if(GameManager.instance.itemsHeld[i] != "")
+            if(GameManager.Instance.itemsHeld[i] != "")
             {
                 sellItemButtons[i].buttonImage.gameObject.SetActive(true);
-                sellItemButtons[i].buttonImage.sprite = GameManager.instance.GetItemDetails(GameManager.instance.itemsHeld[i]).itemSprite;
-                sellItemButtons[i].amountText.text = GameManager.instance.numberOfItems[i].ToString();
+                sellItemButtons[i].buttonImage.sprite = GameManager.Instance.GetItemDetails(GameManager.Instance.itemsHeld[i]).itemSprite;
+                sellItemButtons[i].amountText.text = GameManager.Instance.numberOfItems[i].ToString();
             }
             else
             {
@@ -130,27 +130,27 @@ namespace Core
     {
         if (selectedItem != null)
         {
-            if (GameManager.instance.currentGold >= selectedItem.value)
+            if (GameManager.Instance.currentGold >= selectedItem.value)
             {
-                GameManager.instance.currentGold -= selectedItem.value;
+                GameManager.Instance.currentGold -= selectedItem.value;
 
-                GameManager.instance.AddItem(selectedItem.itemName);
+                GameManager.Instance.AddItem(selectedItem.itemName);
             }
         }
 
-        goldText.text = GameManager.instance.currentGold.ToString() + "g";
+        goldText.text = GameManager.Instance.currentGold.ToString() + "g";
     }
 
     public void SellItem()
     {
         if (selectedItem != null)
         {
-            GameManager.instance.currentGold += Mathf.FloorToInt(selectedItem.value * .5f);
+            GameManager.Instance.currentGold += Mathf.FloorToInt(selectedItem.value * .5f);
 
-            GameManager.instance.RemoveItem(selectedItem.itemName);
+            GameManager.Instance.RemoveItem(selectedItem.itemName);
         }
 
-        goldText.text = GameManager.instance.currentGold.ToString() + "g";
+        goldText.text = GameManager.Instance.currentGold.ToString() + "g";
 
         ShowSellItems();
     }

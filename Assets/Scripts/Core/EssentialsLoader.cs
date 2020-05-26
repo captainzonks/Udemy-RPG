@@ -23,7 +23,7 @@ namespace Core
                 PlayerController.Instance = clone;
             }
 
-            if (GameManager.instance == null)
+            if (GameManager.Instance == null)
             {
                 Instantiate(gameMan);
             }

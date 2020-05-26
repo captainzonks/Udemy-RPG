@@ -10,7 +10,7 @@ namespace Core
         private void Update()
         {
             if (!_canPickup || !Input.GetButtonDown("Fire1") || !PlayerController.Instance.canMove) return;
-            GameManager.instance.AddItem(GetComponent<Item>().itemName);
+            GameManager.Instance.AddItem(GetComponent<Item>().itemName);
             Destroy(gameObject);
         }
 

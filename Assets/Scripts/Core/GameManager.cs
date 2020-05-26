@@ -8,11 +8,11 @@ namespace Core
     public class GameManager : MonoBehaviour
     {
 
-        public static GameManager instance;
+        public static GameManager Instance;
 
         public CharStats[] playerStats;
 
-        public bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive;
+        public bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive, consoleOpen;
 
         public string[] itemsHeld;
         public int[] numberOfItems;
@@ -23,7 +23,7 @@ namespace Core
         // Start is called before the first frame update
         private void Start()
         {
-            instance = this;
+            Instance = this;
 
             DontDestroyOnLoad(gameObject);
 
@@ -33,13 +33,13 @@ namespace Core
         // Update is called once per frame
         private void Update()
         {
-            if(gameMenuOpen || dialogActive || fadingBetweenAreas || shopActive)
+            if (gameMenuOpen || dialogActive || fadingBetweenAreas || shopActive || consoleOpen)
             {
-                PlayerController.Instance.canMove = false;
+                PlayerController.Instance.currentState = PlayerState.Interact;
             }
             else
             {
-                PlayerController.Instance.canMove = true;
+                PlayerController.Instance.currentState = PlayerState.Walk;
             }
 
             // debug test
@@ -115,7 +115,7 @@ namespace Core
                 }
             }
 
-            GameMenu.instance.ShowItems();
+            GameMenu.Instance.ShowItems();
         }
 
         public void RemoveItem(string itemToRemove)
@@ -141,7 +141,7 @@ namespace Core
                     itemsHeld[itemPosition] = "";
                 }
 
-                GameMenu.instance.ShowItems();
+                GameMenu.Instance.ShowItems();
             }
             else
             {

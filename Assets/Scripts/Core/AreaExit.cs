@@ -36,7 +36,7 @@ namespace Core
 
             shouldLoadAfterFade = true;
 
-            GameManager.instance.fadingBetweenAreas = true;
+            GameManager.Instance.fadingBetweenAreas = true;
 
             UIFade.Instance.FadeToBlack();
 
