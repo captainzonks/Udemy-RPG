@@ -1,4 +1,5 @@
 ﻿using Character;
+using Quest;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -216,6 +217,12 @@ namespace Core
         {
             activeItem.Use(selectChar);
             CloseItemCharChoice();
+        }
+
+        public void SaveGame()
+        {
+            GameManager.Instance.SaveData();
+            QuestManager.Instance.SaveQuestData();
         }
     }
 }

@@ -24,7 +24,6 @@ namespace Character
         public string equippedArmr;
         public Sprite charImage;
 
-        // Start is called before the first frame update
         private void Start()
         {
             expToNextLevel = new int[maxLevel];
@@ -36,7 +35,6 @@ namespace Character
             }
         }
 
-        // Update is called once per frame
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
