@@ -101,6 +101,7 @@ namespace Core
 
             itemCharChoiceMenu.SetActive(false);
         }
+
         public void CloseMenu()
         {
             foreach (var t in windows)
@@ -131,21 +132,15 @@ namespace Core
         public void StatusChar(int selected)
         {
             statusName.text = playerStats[selected].charName;
-            statusHP.text = playerStats[selected].currentHP.ToString() + "/" + playerStats[selected].maxHP;
-            statusMP.text = playerStats[selected].currentMP.ToString() + "/" + playerStats[selected].maxMP;
+            statusHP.text = playerStats[selected].currentHP + "/" + playerStats[selected].maxHP;
+            statusMP.text = playerStats[selected].currentMP + "/" + playerStats[selected].maxMP;
             statusStr.text = playerStats[selected].strength.ToString();
             statusDef.text = playerStats[selected].defense.ToString();
             
-            if(playerStats[selected].equippedWpn != "")
-            {
-                statusWpnEqpd.text = playerStats[selected].equippedWpn;
-            }
+            statusWpnEqpd.text = playerStats[selected].equippedWpn != "" ? playerStats[selected].equippedWpn : "No Weapon";
             statusWpnPwr.text = playerStats[selected].wpnPwr.ToString();
 
-            if(playerStats[selected].equippedArmr != "")
-            {
-                statusArmrEqpd.text = playerStats[selected].equippedArmr;
-            }
+            statusArmrEqpd.text = playerStats[selected].equippedArmr != "" ? playerStats[selected].equippedArmr : "No Armor";
             statusArmrPwr.text = playerStats[selected].armrPwr.ToString();
 
             statusExp.text = (playerStats[selected].expToNextLevel[playerStats[selected].playerLevel] - playerStats[selected].currentEXP).ToString();
