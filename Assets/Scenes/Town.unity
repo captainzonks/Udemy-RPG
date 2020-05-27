@@ -21596,6 +21596,11 @@ PrefabInstance:
       propertyPath: smoothing
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 2284249028512093104, guid: 195db7628150c334ea32ba8a3ab62562,
+        type: 3}
+      propertyPath: musicToPlay
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2284249028512093105, guid: 195db7628150c334ea32ba8a3ab62562,
         type: 3}
       propertyPath: m_AllowMSAA

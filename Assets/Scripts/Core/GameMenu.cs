@@ -1,4 +1,5 @@
-﻿using Character;
+﻿using Audio;
+using Character;
 using Quest;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,7 @@ namespace Core
             }
             else
             {
+                AudioManager.Instance.PlaySFX(5);
                 theMenu.SetActive(true);
                 UpdateMainStats();
                 GameManager.Instance.gameMenuOpen = true;
@@ -223,6 +225,11 @@ namespace Core
         {
             GameManager.Instance.SaveData();
             QuestManager.Instance.SaveQuestData();
+        }
+
+        public void PlayButtonSound()
+        {
+            AudioManager.Instance.PlaySFX(4);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Terminal;
+﻿using Audio;
+using Terminal;
 using Movement;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Core
         public GameObject player;
         public GameObject gameMan;
         public GameObject console;
+        public GameObject audioManager;
 
         private void Start()
         {
@@ -32,6 +34,11 @@ namespace Core
             if (TerminalController.Instance == null)
             {
                 Instantiate(console);
+            }
+
+            if (AudioManager.Instance == null)
+            {
+                Instantiate(audioManager);
             }
         }
     }

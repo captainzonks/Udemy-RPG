@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Audio;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Movement
@@ -16,6 +17,11 @@ namespace Movement
 
         private float _halfHeight;
         private float _halfWidth;
+
+        // audio
+        public int musicToPlay;
+        private bool musicStarted;
+        public int sfxToPlay;
 
         private void Start()
         {
@@ -54,6 +60,10 @@ namespace Movement
                 Mathf.Clamp(cameraPosition.y, bottomLeftLimit.y, topRightLimit.y),
                 cameraPosition.z);
             transform.position = cameraPosition;
+
+            if (musicStarted) return;
+            musicStarted = true;
+            AudioManager.Instance.PlayBGM(musicToPlay);
         }
     }
 }
