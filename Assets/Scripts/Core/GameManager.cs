@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Character;
 using Movement;
+using Save;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +10,10 @@ namespace Core
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        public static GameManager Instance { get; private set; }
 
         public CharStats[] playerStats;
+        public Character.Character playerCharacter;
 
         public bool gameMenuOpen, dialogActive, fadingBetweenAreas, shopActive, consoleOpen;
 
@@ -20,12 +23,25 @@ namespace Core
 
         public int currentGold;
 
-        private void Start()
+        private void Awake()
         {
-            Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                if (Instance != this)
+                {
+                    Destroy(gameObject);
+                }
+            }
 
             DontDestroyOnLoad(gameObject);
+        }
 
+        private void Start()
+        {
             SortItems();
         }
 
@@ -40,18 +56,6 @@ namespace Core
                 if (PlayerController.Instance.currentState != PlayerState.Attack)
                     PlayerController.Instance.currentState = PlayerState.Walk;
             }
-
-            // debug for saving and loading data
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                SaveData();
-            }
-
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                LoadData();
-            }
-
         }
 
         public Item GetItemDetails(string itemToGrab)
@@ -154,75 +158,30 @@ namespace Core
 
         public void SaveData()
         {
-            // save player position
-            PlayerPrefs.SetString("Current_Scene", SceneManager.GetActiveScene().name);
-            var position = PlayerController.Instance.transform.position;
-            PlayerPrefs.SetFloat("Player_Position_X", position.x);
-            PlayerPrefs.SetFloat("Player_Position_Y", position.y);
-            PlayerPrefs.SetFloat("Player_Position_Z", position.z);
-
-            // save player data
-            foreach (var character in playerStats)
-            {
-                PlayerPrefs.SetInt("Player_" + character.charName + "_Active", character.gameObject.activeInHierarchy ? 1 : 0);
-
-                PlayerPrefs.SetInt("Player_" + character.charName + "_Level", character.playerLevel);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_CurrentExp", character.currentEXP);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_CurrentHP", character.currentHP);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_MaxHP", character.maxHP);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_CurrentMP", character.currentMP);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_MaxMP", character.maxMP);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_Strength", character.strength);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_Defense", character.defense);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_WpnPwr", character.wpnPwr);
-                PlayerPrefs.SetInt("Player_" + character.charName + "_ArmrPwr", character.armrPwr);
-                PlayerPrefs.SetString("Player_" + character.charName + "_EquippedWpn", character.equippedWpn);
-                PlayerPrefs.SetString("Player_" + character.charName + "_EquippedArmr", character.equippedArmr);
-            }
-
-            // save inventory data
-            for (var i = 0; i < itemsHeld.Length; i++)
-            {
-                PlayerPrefs.SetString("ItemInInventory_" + i, itemsHeld[i]);
-                PlayerPrefs.SetInt("ItemAmount_" + i, numberOfItems[i]);
-            }
+            SaveSystem.SavePlayer(playerCharacter, PlayerController.Instance);
         }
 
         public void LoadData()
         {
-            // load character position
+            var data = SaveSystem.LoadPlayer();
+
+            // load scene
+            SceneManager.LoadScene(data.currentScene);
+
+            // load player position
+
+            // TODO: camera bounds loading is bugged
+
             PlayerController.Instance.transform.position = new Vector3(
-                PlayerPrefs.GetFloat("Player_Position_X"),
-                PlayerPrefs.GetFloat("Player_Position_Y"),
-                PlayerPrefs.GetFloat("Player_Position_Z")
+                data.position[0], data.position[1], data.position[2]
                 );
 
             // load character data
-            foreach (var character in playerStats)
-            {
-                character.gameObject
-                    .SetActive(PlayerPrefs.GetInt("Player_" + character.charName + "_Active") != 0);
-
-                character.playerLevel = PlayerPrefs.GetInt("Player_" + character.charName + "_Level");
-                character.currentEXP = PlayerPrefs.GetInt("Player_" + character.charName + "_CurrentExp");
-                character.currentHP = PlayerPrefs.GetInt("Player_" + character.charName + "_CurrentHP");
-                character.maxHP = PlayerPrefs.GetInt("Player_" + character.charName + "_MaxHP");
-                character.currentMP = PlayerPrefs.GetInt("Player_" + character.charName + "_CurrentMP");
-                character.maxMP = PlayerPrefs.GetInt("Player_" + character.charName + "_MaxMP");
-                character.strength = PlayerPrefs.GetInt("Player_" + character.charName + "_Strength");
-                character.defense = PlayerPrefs.GetInt("Player_" + character.charName + "_Defense");
-                character.wpnPwr = PlayerPrefs.GetInt("Player_" + character.charName + "_WpnPwr");
-                character.armrPwr = PlayerPrefs.GetInt("Player_" + character.charName + "_ArmrPwr");
-                character.equippedWpn = PlayerPrefs.GetString("Player_" + character.charName + "_EquippedWpn");
-                character.equippedArmr = PlayerPrefs.GetString("Player_" + character.charName + "_EquippedArmr");
-            }
-
-            // load character inventory data
-            for (var i = 0; i < itemsHeld.Length; i++)
-            {
-                itemsHeld[i] = PlayerPrefs.GetString("ItemInInventory_" + i);
-                numberOfItems[i] = PlayerPrefs.GetInt("ItemAmount_" + i);
-            }
+            playerCharacter.characterName = data.characterName;
+            playerCharacter.currentHp = data.currentHp;
+            playerCharacter.maxHp = data.maxHp;
+            playerCharacter.currentEnergy = data.currentEnergy;
+            playerCharacter.maxEnergy = data.maxEnergy;
         }
     }
 }

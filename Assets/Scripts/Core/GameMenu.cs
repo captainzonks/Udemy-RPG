@@ -1,7 +1,10 @@
 ﻿using Audio;
 using Character;
+using Movement;
 using Quest;
+using Terminal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Core
@@ -34,6 +37,8 @@ namespace Core
 
         public static GameMenu Instance;
         public Text goldText;
+
+        public string mainMenu;
 
         private void Start()
         {
@@ -230,6 +235,16 @@ namespace Core
         public void PlayButtonSound()
         {
             AudioManager.Instance.PlaySFX(4);
+        }
+
+        public void QuitGame()
+        {
+            SceneManager.LoadScene(mainMenu);
+            Destroy(GameManager.Instance.gameObject);
+            Destroy(PlayerController.Instance.gameObject);
+            Destroy(AudioManager.Instance.gameObject);
+            Destroy(TerminalController.Instance.gameObject);
+            Destroy(gameObject);
         }
     }
 }

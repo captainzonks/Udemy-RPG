@@ -8,7 +8,7 @@ namespace Quest
         public string[] questMarkerNames;
         public bool[] questMarkersComplete;
 
-        public static QuestManager Instance;
+        public static QuestManager Instance { get; private set; }
 
         private void Start()
         {

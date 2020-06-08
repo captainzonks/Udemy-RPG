@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using Core;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Movement
 {
@@ -23,8 +25,8 @@ namespace Movement
         private Animator _playerAnimator;
 
         public static PlayerController Instance;
-
         public string areaTransitionName;
+
         private Vector3 _bottomLeftLimit;
         private Vector3 _topRightLimit;
 

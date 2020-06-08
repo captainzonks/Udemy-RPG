@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 997923011702431702}
   - component: {fileID: 7936418525395767050}
   - component: {fileID: 7936418525395767049}
+  - component: {fileID: -6464859096502466417}
   - component: {fileID: 7936418525395767052}
   m_Layer: 0
   m_Name: Player
@@ -449,8 +450,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  moveSpeed: 5
+  moveSpeed: 6
   areaTransitionName: 
+--- !u!114 &-6464859096502466417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7936418525395767046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777f03bf6d346884dbe0c1963b36784e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Hero
+  currentHp: 10
+  maxHp: 20
+  currentEnergy: 15
+  maxEnergy: 30
+  currentPosition: {fileID: 0}
+  currentScene:
+    m_Handle: 0
 --- !u!95 &7936418525395767052
 Animator:
   serializedVersion: 3

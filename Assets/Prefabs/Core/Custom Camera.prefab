@@ -97,5 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  smoothing: 0.1
+  smoothing: 0.05
   theMap: {fileID: 0}
+  bottomLeftLimit: {x: 0, y: 0, z: 0}
+  topRightLimit: {x: 0, y: 0, z: 0}
+  musicToPlay: 0
+  sfxToPlay: 0

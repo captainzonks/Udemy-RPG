@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Audio;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
@@ -8,9 +9,12 @@ namespace Movement
     public class RoomMove : MonoBehaviour
     {
         public Tilemap theGround;
+        public int musicToPlay;
         public Vector3 playerChange;
 
         private CameraController _cam;
+
+        private bool _coRunning;
 
         // title card variables
         public bool needText;
@@ -30,15 +34,17 @@ namespace Movement
             other.transform.position += playerChange;
             _cam.theMap = theGround;
             _cam.UpdateBounds();
+            AudioManager.Instance.PlayBGM(musicToPlay);
 
-            if (needText)
-            {
-                StartCoroutine(PlaceNameCo());
-            }
+            if (!needText) return;
+            if (_coRunning)
+                StopCoroutine(PlaceNameCo());
+            StartCoroutine(PlaceNameCo());
         }
 
         private IEnumerator PlaceNameCo()
         {
+            _coRunning = true;
             placeText.text = placeName;
 
             text.SetActive(true);
@@ -46,6 +52,7 @@ namespace Movement
             yield return new WaitForSeconds(4f);
 
             text.SetActive(false);
+            _coRunning = false;
         }
     }
 }

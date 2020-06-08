@@ -6,6 +6,8 @@ namespace Movement
 {
     public class CameraController : MonoBehaviour
     {
+        public static CameraController Instance { get; private set; }
+
         // set references in editor
         public Transform target;
         public float smoothing;
@@ -20,12 +22,18 @@ namespace Movement
 
         // audio
         public int musicToPlay;
-        private bool musicStarted;
+        private bool _musicStarted;
         public int sfxToPlay;
+        private PlayerController _playerController;
+
+        private void Awake()
+        {
+            _playerController = FindObjectOfType<PlayerController>();
+        }
 
         private void Start()
         {
-            target = FindObjectOfType<PlayerController>().transform;
+            target = _playerController.transform;
 
             UpdateBounds();
         }
@@ -48,6 +56,8 @@ namespace Movement
 
         private void LateUpdate()
         {
+            if (_playerController == null) return;
+
             if (transform.position == target.position) return;
 
             var cameraPosition = transform.position;
@@ -61,8 +71,8 @@ namespace Movement
                 cameraPosition.z);
             transform.position = cameraPosition;
 
-            if (musicStarted) return;
-            musicStarted = true;
+            if (_musicStarted) return;
+            _musicStarted = true;
             AudioManager.Instance.PlayBGM(musicToPlay);
         }
     }

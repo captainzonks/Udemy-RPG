@@ -13,7 +13,7 @@ namespace Core
         public GameObject console;
         public GameObject audioManager;
 
-        private void Start()
+        private void Awake()
         {
             if (UIFade.Instance == null)
             {

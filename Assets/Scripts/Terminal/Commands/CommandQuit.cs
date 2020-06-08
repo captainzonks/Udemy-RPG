@@ -23,9 +23,9 @@ namespace Terminal.Commands
         {
             if (Application.isEditor)
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
-                #endif
+#endif
             }
             else
             {

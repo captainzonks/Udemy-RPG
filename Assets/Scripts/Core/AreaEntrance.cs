@@ -7,7 +7,6 @@ namespace Core
     {
         public string transitionName;
 
-        // Start is called before the first frame update
         private void Start()
         {
             if (transitionName == PlayerController.Instance.areaTransitionName)

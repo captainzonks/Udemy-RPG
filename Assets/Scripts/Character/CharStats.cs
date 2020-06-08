@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 
 namespace Character
 {
@@ -26,20 +27,13 @@ namespace Character
 
         private void Start()
         {
+
             expToNextLevel = new int[maxLevel];
             expToNextLevel[1] = baseEXP;
 
             for (var i = 2; i < expToNextLevel.Length; i++)
             {
                 expToNextLevel[i] = Mathf.FloorToInt(expToNextLevel[i - 1] * 1.05f);
-            }
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                AddExp(1000);
             }
         }
 

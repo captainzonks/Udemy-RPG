@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 221065607}
   - component: {fileID: 221065606}
   m_Layer: 0
-  m_Name: Collision
+  m_Name: Town_Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3863,7 +3863,7 @@ GameObject:
   - component: {fileID: 312621944}
   - component: {fileID: 312621943}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Town_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9186,7 +9186,7 @@ GameObject:
   - component: {fileID: 379561028}
   - component: {fileID: 379561027}
   m_Layer: 0
-  m_Name: Midground
+  m_Name: Town_Midground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9893,72 +9893,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &519888804
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 519888807}
-  - component: {fileID: 519888806}
-  - component: {fileID: 519888805}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &519888805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519888804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &519888806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519888804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &519888807
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519888804}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &728531880
 GameObject:
   m_ObjectHideFlags: 0
@@ -9989,7 +9923,7 @@ Transform:
   m_Children:
   - {fileID: 396138373}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &728531882
 MonoBehaviour:
@@ -10223,6 +10157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1071703703}
+  - component: {fileID: 1071703704}
   m_Layer: 0
   m_Name: Road01
   m_TagString: Location
@@ -10247,6 +10182,23 @@ Transform:
   m_Father: {fileID: 1066435080}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1071703704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071703702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ff35f953388524b90b73b73695b981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationName: Road01
+  tilemaps:
+  - {fileID: 1212134141}
+  - {fileID: 1863595293}
+  - {fileID: 1443336530}
 --- !u!1 &1212134138
 GameObject:
   m_ObjectHideFlags: 0
@@ -10259,7 +10211,7 @@ GameObject:
   - component: {fileID: 1212134141}
   - component: {fileID: 1212134140}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Road01_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17188,7 +17140,7 @@ GameObject:
   - component: {fileID: 1443336533}
   - component: {fileID: 1443336532}
   m_Layer: 0
-  m_Name: Collision
+  m_Name: Road01_Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20454,6 +20406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1736709514}
+  - component: {fileID: 1736709515}
   m_Layer: 0
   m_Name: Town
   m_TagString: Location
@@ -20478,6 +20431,23 @@ Transform:
   m_Father: {fileID: 1066435080}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1736709515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736709513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ff35f953388524b90b73b73695b981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationName: Town
+  tilemaps:
+  - {fileID: 312621944}
+  - {fileID: 379561028}
+  - {fileID: 221065604}
 --- !u!1 &1796849934
 GameObject:
   m_ObjectHideFlags: 0
@@ -20566,7 +20536,7 @@ GameObject:
   - component: {fileID: 1863595293}
   - component: {fileID: 1863595292}
   m_Layer: 0
-  m_Name: Midground
+  m_Name: Road01_Midground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21604,7 +21574,7 @@ PrefabInstance:
     - target: {fileID: 2284249028512093105, guid: 195db7628150c334ea32ba8a3ab62562,
         type: 3}
       propertyPath: m_AllowMSAA
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2284249028512093105, guid: 195db7628150c334ea32ba8a3ab62562,
         type: 3}
@@ -21623,31 +21593,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 195db7628150c334ea32ba8a3ab62562, type: 3}
---- !u!1 &2119265228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1360286289148671037, guid: a80576564873fc5458e710558e37fe1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1360286289148175355}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2119265229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119265228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b943bf295d1a17f4c818bb0481e8f386, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questMarkerNames:
-  - 
-  - fight the demon
-  - enter the cave
-  - quest test
-  - save the world
-  questMarkersComplete: 
 --- !u!1001 &377929803031440934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21693,7 +21638,7 @@ PrefabInstance:
     - target: {fileID: 377929802378149509, guid: 5a023332015085e48b71a786394838c2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 377929802378149509, guid: 5a023332015085e48b71a786394838c2,
         type: 3}
@@ -21786,80 +21731,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2b4ea7d17fbd324fa0ebb2775a8746e, type: 3}
---- !u!1001 &1360286289148175355
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1360286288654505344, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.3668394
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.257118
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -358.44922
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671027, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360286289148671037, guid: a80576564873fc5458e710558e37fe1a,
-        type: 3}
-      propertyPath: m_Name
-      value: GameManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a80576564873fc5458e710558e37fe1a, type: 3}
 --- !u!1001 &2081120558845084212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21877,6 +21748,11 @@ PrefabInstance:
       propertyPath: theGround
       value: 
       objectReference: {fileID: 312621944}
+    - target: {fileID: 2081120558008592565, guid: 5e6e3460bd5fc29408c85e2bfac05b66,
+        type: 3}
+      propertyPath: musicToPlay
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2081120558008592567, guid: 5e6e3460bd5fc29408c85e2bfac05b66,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -21916,6 +21792,11 @@ PrefabInstance:
         type: 3}
       propertyPath: placeName
       value: The Meadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081120558537473955, guid: 5e6e3460bd5fc29408c85e2bfac05b66,
+        type: 3}
+      propertyPath: musicToPlay
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2081120558909562472, guid: 5e6e3460bd5fc29408c85e2bfac05b66,
         type: 3}
@@ -21965,7 +21846,7 @@ PrefabInstance:
     - target: {fileID: 2081120559880431547, guid: 5e6e3460bd5fc29408c85e2bfac05b66,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2081120559880431547, guid: 5e6e3460bd5fc29408c85e2bfac05b66,
         type: 3}
@@ -22035,7 +21916,7 @@ PrefabInstance:
     - target: {fileID: 2939753799568064069, guid: ce5b3524e5ac4124e85c5c6771ab4841,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2939753799568064069, guid: ce5b3524e5ac4124e85c5c6771ab4841,
         type: 3}
@@ -22124,7 +22005,7 @@ PrefabInstance:
     - target: {fileID: 8972978525035935170, guid: 229b7bc51318e4e4e865215285ca4b29,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8972978525035935170, guid: 229b7bc51318e4e4e865215285ca4b29,
         type: 3}

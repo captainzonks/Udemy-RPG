@@ -8,6 +8,7 @@ TagManager:
   - Location
   - Console
   - Breakable
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -47,6 +48,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1639509023
+    locked: 0
+  - name: NPC
+    uniqueID: 739874615
     locked: 0
   - name: Player
     uniqueID: 3377888475
