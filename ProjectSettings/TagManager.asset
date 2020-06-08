@@ -9,6 +9,7 @@ TagManager:
   - Console
   - Breakable
   - GameManager
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -18,9 +19,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Player
+  - NPC
+  - Object
   - 
   - 
   - 

@@ -9,9 +9,11 @@ namespace Movement
 {
     public enum PlayerState
     {
+        Idle,
         Walk,
         Attack,
-        Interact
+        Interact,
+        Stagger
     }
 
     public class PlayerController : MonoBehaviour
@@ -73,12 +75,14 @@ namespace Movement
             _change.y = Input.GetAxisRaw("Vertical");
             if (GameManager.Instance.consoleOpen) return;
 
-            if (Input.GetButtonDown("attack") && currentState != PlayerState.Attack)
+            if (Input.GetButtonDown("attack") && currentState != PlayerState.Attack
+            && currentState != PlayerState.Stagger)
             {
                 StartCoroutine(AttackCo());
             }
             else switch (currentState)
             {
+                case PlayerState.Idle:
                 case PlayerState.Walk:
                     UpdateAnimationAndMove();
                     break;
@@ -129,6 +133,19 @@ namespace Movement
             _playerRigidBody.MovePosition(
                 transform.position + _change * (moveSpeed * Time.deltaTime)
             );
+        }
+
+        public void Knock(float knockTime)
+        {
+            StartCoroutine(KnockCo(knockTime));
+        }
+
+        private IEnumerator KnockCo(float knockTime)
+        {
+            yield return new WaitForSeconds(knockTime);
+            _playerRigidBody.velocity = Vector2.zero;
+            currentState = PlayerState.Idle;
+            _playerRigidBody.velocity = Vector2.zero;
         }
 
         public void SetBounds(Vector3 botLeft, Vector3 topRight)
